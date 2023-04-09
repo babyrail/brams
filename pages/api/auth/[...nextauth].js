@@ -1,4 +1,9 @@
-import NextAuth, { Awaitable, NextAuthOptions } from "next-auth";
+import NextAuth, {
+  Awaitable,
+  NextAuthOptions,
+  User as AuthUser,
+  Session,
+} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/userRecords";
@@ -8,8 +13,14 @@ import jwt from "jsonwebtoken";
 // const createToken = (_id, privilege) => {
 //   return jwt.sign({ _id, privilege }, process.env.SECRET, { expiresIn: "3d" });
 // };
-
-const authOptions: NextAuthOptions = {
+// interface CustomUser extends AuthUser {
+//   role: string;
+// }
+// interface CustomSession extends Session {
+//   role: string;
+//   name: string;
+// }
+const authOptions = {
   session: {
     strategy: "jwt",
   },
@@ -24,10 +35,7 @@ const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const { username, password } = credentials as {
-          username: string;
-          password: string;
-        };
+        const { username, password } = credentials;
         await dbConnect();
         const user = await User.login(username, password);
         if (user) {
@@ -62,15 +70,17 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user, account, profile, isNewUser }) {
       if (user) {
-        token.role = user.role as string;
-        token.name = user.name as string;
+        const customUser = user;
+        token.role = customUser.role;
+        token.name = customUser.name;
       }
       return token;
     },
     async session({ session, token }) {
-      session.role = token.role as string;
-      session.name = token.name as string;
-      return session;
+      const customSession = session;
+      customSession.role = token.role;
+      customSession.name = token.name;
+      return customSession;
     },
   },
 };

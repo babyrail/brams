@@ -148,7 +148,7 @@ export default function Login({}) {
 }
 
 export async function getServerSideProps(context: any) {
-  const session = await getSession(context);
+  const session = (await getSession(context)) as any;
   const sesh = { ...session };
   if (session) {
     if (sesh.role === "admin") {

@@ -9,7 +9,7 @@ export default function NavBar() {
     data: MySession | null;
     status: "loading" | "unauthenticated" | "authenticated";
   };
-  const sesh = { ...session };
+  const sesh = { ...session } as any;
   return (
     <div>
       <div className="container-full bg-white shadow-md px-7 ">
