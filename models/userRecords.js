@@ -1,23 +1,20 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
 import bcrypt from "bcrypt";
 
-const userSchema =
-  new Schema() <
-  IUser >
-  {
-    username: {
-      type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    privilege: {
-      type: String,
-      required: false,
-    },
-  };
+const userSchema = new Schema({
+  username: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  privilege: {
+    type: String,
+    required: false,
+  },
+});
 
 userSchema.statics.login = async function (username, password) {
   if (!username || !password) {
