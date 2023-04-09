@@ -1,5 +1,5 @@
 import dbConnect from "../../../lib/dbConnect";
-import User, { IUserModel } from "../../../models/userRecords";
+import User from "../../../models/userRecords";
 import jwt from "jsonwebtoken";
 
 const createToken = (_id, privilege) => {

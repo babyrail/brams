@@ -13,14 +13,14 @@ import jwt from "jsonwebtoken";
 // const createToken = (_id, privilege) => {
 //   return jwt.sign({ _id, privilege }, process.env.SECRET, { expiresIn: "3d" });
 // };
-// interface CustomUser extends AuthUser {
-//   role: string;
-// }
-// interface CustomSession extends Session {
-//   role: string;
-//   name: string;
-// }
-const authOptions = {
+interface CustomUser extends AuthUser {
+  role: string;
+}
+interface CustomSession extends Session {
+  role: string;
+  name: string;
+}
+const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
@@ -35,7 +35,10 @@ const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const { username, password } = credentials;
+        const { username, password } = credentials as {
+          username: string;
+          password: string;
+        };
         await dbConnect();
         const user = await User.login(username, password);
         if (user) {
@@ -70,16 +73,16 @@ const authOptions = {
   callbacks: {
     async jwt({ token, user, account, profile, isNewUser }) {
       if (user) {
-        const customUser = user;
-        token.role = customUser.role;
-        token.name = customUser.name;
+        const customUser = user as CustomUser;
+        token.role = customUser.role as string;
+        token.name = customUser.name as string;
       }
       return token;
     },
     async session({ session, token }) {
-      const customSession = session;
-      customSession.role = token.role;
-      customSession.name = token.name;
+      const customSession = session as CustomSession;
+      customSession.role = token.role as string;
+      customSession.name = token.name as string;
       return customSession;
     },
   },

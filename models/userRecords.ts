@@ -1,7 +1,18 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
 import bcrypt from "bcrypt";
 
-const userSchema = new Schema({
+export interface IUser extends Document {
+  username: string;
+  password: string;
+  privilege: string;
+}
+
+export interface IUserModel extends Model<IUser> {
+  login(username: string, password: string): Promise<IUser>;
+  signup(username: string, password: string, privilege: string): Promise<IUser>;
+}
+
+const userSchema = new Schema<IUser>({
   username: {
     type: String,
     required: true,
@@ -16,7 +27,10 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.statics.login = async function (username, password) {
+userSchema.statics.login = async function (
+  username: string,
+  password: string
+): Promise<IUser> {
   if (!username || !password) {
     throw new Error("Please provide a username and password");
   }
@@ -33,7 +47,11 @@ userSchema.statics.login = async function (username, password) {
   return user;
 };
 
-userSchema.statics.signup = async function (username, password, privilege) {
+userSchema.statics.signup = async function (
+  username: string,
+  password: string,
+  privilege: string
+): Promise<IUser> {
   if (!username || !password) {
     throw new Error("Please provide a username and password");
   }
@@ -53,6 +71,7 @@ userSchema.statics.signup = async function (username, password, privilege) {
   return user;
 };
 
-const User = mongoose.models.User || mongoose.model("User", userSchema);
+const User: IUserModel =
+  mongoose.models.User || mongoose.model<IUser, IUserModel>("User", userSchema);
 
 export default User;
