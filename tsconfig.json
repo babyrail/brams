@@ -19,11 +19,11 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/api/auth/[...nextauth].js",
-    "pages/api/records/index.js",
+    "pages/api/records/index.ts",
     "pages/api/auth/signin.js",
     "models/userRecords.js",
     "pages/createRecord.jsx",
-    "pages/api/signup.js"
+    "pages/api/signup.ts"
   ],
   "exclude": ["node_modules"]
 }
