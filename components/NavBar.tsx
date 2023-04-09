@@ -4,7 +4,7 @@ import { Session } from "next-auth";
 
 type MySession = Session & { expires?: string };
 
-export default function NavBar({ props }) {
+export default function NavBar() {
   const { data: session } = useSession() as {
     data: MySession | null;
     status: "loading" | "unauthenticated" | "authenticated";
