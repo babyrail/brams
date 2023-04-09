@@ -1,36 +1,25 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
 import bcrypt from "bcrypt";
 
-export interface IUser extends Document {
-  username: string;
-  password: string;
-  privilege: string;
-}
+const userSchema =
+  new Schema() <
+  IUser >
+  {
+    username: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    privilege: {
+      type: String,
+      required: false,
+    },
+  };
 
-export interface IUserModel extends Model<IUser> {
-  login(username: string, password: string): Promise<IUser>;
-  signup(username: string, password: string, privilege: string): Promise<IUser>;
-}
-
-const userSchema = new Schema<IUser>({
-  username: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  privilege: {
-    type: String,
-    required: false,
-  },
-});
-
-userSchema.statics.login = async function (
-  username: string,
-  password: string
-): Promise<IUser> {
+userSchema.statics.login = async function (username, password) {
   if (!username || !password) {
     throw new Error("Please provide a username and password");
   }
@@ -47,11 +36,7 @@ userSchema.statics.login = async function (
   return user;
 };
 
-userSchema.statics.signup = async function (
-  username: string,
-  password: string,
-  privilege: string
-): Promise<IUser> {
+userSchema.statics.signup = async function (username, password, privilege) {
   if (!username || !password) {
     throw new Error("Please provide a username and password");
   }
@@ -71,7 +56,6 @@ userSchema.statics.signup = async function (
   return user;
 };
 
-const User =
-  mongoose.models.User || mongoose.model<IUser, IUserModel>("User", userSchema);
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default User;
