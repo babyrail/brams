@@ -19,6 +19,12 @@ if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
 
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  dbName: "barangay-ayuda-db",
+};
+
 async function dbConnect() {
   if (cached.conn) {
     return cached.conn;
@@ -30,11 +36,7 @@ async function dbConnect() {
     };
 
     cached.promise = mongoose
-      .connect(MONGODB_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        dbName: "barangay-ayuda-db",
-      })
+      .connect(MONGODB_URI, options)
       .then((mongoose) => {
         console.log("connected");
         return mongoose;

@@ -1,5 +1,10 @@
 import jwt from "jsonwebtoken";
 
+interface Decoded {
+  _id: string;
+  privilege: string;
+}
+
 export default function isAuthenticated(req, res, next) {
   const secret = process.env.SECRET;
   const { authorization } = req.headers;
@@ -10,7 +15,8 @@ export default function isAuthenticated(req, res, next) {
 
   const token = authorization.split(" ")[1];
   try {
-    const { _id, privilege } = jwt.verify(token, secret);
+    const decoded = jwt.verify(token, secret);
+    const { _id, privilege } = decoded as Decoded;
     req._id = _id;
     req.privilege = privilege;
     next();
