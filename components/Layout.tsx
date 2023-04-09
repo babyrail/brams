@@ -4,13 +4,13 @@ import { Session } from "next-auth";
 import NavBar from "./NavBar";
 import { getSession } from "next-auth/react";
 
-interface Layout {
+interface LayoutProps extends PropsWithChildren<{}> {
   children: ReactNode;
   session?: Session | null; // Include the session property of type Session or null
 }
-export const Layout: React.FC<Layout> = ({
+export const Layout: React.FC<LayoutProps> = ({
   children,
-  session,
+  ...session
 }: PropsWithChildren<{}>) => {
   return (
     <>
@@ -28,3 +28,5 @@ export async function getServerSideProps(context: any) {
     props: { session },
   };
 }
+
+export default Layout;
