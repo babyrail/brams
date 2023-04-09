@@ -71,7 +71,7 @@ userSchema.statics.signup = async function (
   return user;
 };
 
-const User: IUserModel =
+const User =
   mongoose.models.User || mongoose.model<IUser, IUserModel>("User", userSchema);
 
 export default User;
