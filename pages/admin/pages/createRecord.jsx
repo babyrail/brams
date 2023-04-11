@@ -1,8 +1,11 @@
 import { useState } from "react";
 import cloudinary from "next-cloudinary";
 import { getSession, useSession } from "next-auth/react";
-
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 export default function CreateRecord({ sesh }) {
+  const MySwal = withReactContent(Swal);
+
   const [file, setFile] = useState(null);
   function handleOnChange() {
     const file = event.target.files[0];
@@ -106,8 +109,20 @@ export default function CreateRecord({ sesh }) {
           },
           body: jsonData,
         });
-        const result = await uploadToDB.json();
-        console.log(result);
+        if (uploadToDB.ok) {
+          const result = await uploadToDB.json();
+          console.log(result);
+          MySwal.fire({
+            title: "Success!",
+            text: "Record has been created!",
+            icon: "success",
+            confirmButtonText: "Ok",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = "/admin/pages/createRecord";
+            }
+          });
+        }
       }
     };
     upload();
