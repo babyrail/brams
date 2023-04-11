@@ -20,6 +20,7 @@ interface CustomUser extends AuthUser {
 interface CustomSession extends Session {
   role: string;
   name: string;
+  accessToken: string;
 }
 const authOptions: NextAuthOptions = {
   session: {
@@ -79,6 +80,7 @@ const authOptions: NextAuthOptions = {
         const customUser = user as CustomUser;
         token.role = customUser.role as string;
         token.name = customUser.name as string;
+        token.token = customUser.token as string;
       }
       return token;
     },
@@ -86,6 +88,7 @@ const authOptions: NextAuthOptions = {
       const customSession = session as CustomSession;
       customSession.role = token.role as string;
       customSession.name = token.name as string;
+      customSession.accessToken = token.token as string;
       return customSession;
     },
   },

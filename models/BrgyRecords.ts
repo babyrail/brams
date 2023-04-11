@@ -12,16 +12,47 @@ const RecordSchema = new mongoose.Schema({
   middleName: {
     type: String,
   },
-  houseNumber: {
-    type: Number,
+  suffix: {
+    type: String,
+  },
+  birthDate: {
+    type: Date,
     required: true,
   },
-  purok_ST: {
+  gender: {
     type: String,
     required: true,
   },
-  blk: {
+  civilStatus: {
+    type: String,
+    required: true,
+  },
+  occupation: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
+  contactNumber: {
     type: Number,
+  },
+  addressLine1: {
+    type: String,
+    required: true,
+  },
+  addressLine2: {
+    type: String,
+  },
+  barangay: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  province: {
+    type: String,
     required: true,
   },
   isFamilyHead: {
@@ -31,10 +62,6 @@ const RecordSchema = new mongoose.Schema({
   brgy_records: {
     type: Array,
     required: false,
-  },
-  familyID: {
-    type: Number,
-    required: true,
   },
   image: {
     type: String,

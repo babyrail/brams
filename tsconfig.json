@@ -22,8 +22,9 @@
     "pages/api/records/index.ts",
     "pages/api/auth/signin.js",
     "models/userRecords.js",
-    "pages/createRecord.jsx",
-    "pages/api/signup.ts"
+    "pages/admin/pages/createRecord.jsx",
+    "pages/api/signup.ts",
+    "pages/admin/pages/createRecord.jsx"
   ],
   "exclude": ["node_modules"]
 }

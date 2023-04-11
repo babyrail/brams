@@ -27,7 +27,7 @@ export default function Admin() {
             </h1>
           </Link>
           <Link
-            href=""
+            href="/admin/pages/manageRecords"
             className="flex flex-col justify-center items-center w-full md:w-1/3 h-60 bg-blue-500 rounded-xl shadow-md hover:cursor-pointer"
             data-attribute="manage-records"
           >
@@ -47,7 +47,7 @@ export default function Admin() {
             </h1>
           </Link>
           <Link
-            href=""
+            href="/admin/pages/ayudaManagement"
             className="flex flex-col justify-center items-center w-full md:w-1/3 h-60 bg-blue-500 rounded-xl shadow-md hover:cursor-pointer"
             data-attribute="ayuda-mngmt"
           >
