@@ -17,7 +17,7 @@ export default function Admin() {
       <div className="container-full">
         <div className=" container mx-auto flex flex-col md:flex-row justify-center items-center md:flex-wrap gap-5 p-10 ">
           <Link
-            href=""
+            href="/admin/pages/manageUsers"
             className="flex flex-col justify-center items-center w-full md:w-1/3 h-60 bg-blue-500 rounded-xl shadow-md hover:cursor-pointer"
             data-attribute="manage-users"
           >
@@ -37,7 +37,7 @@ export default function Admin() {
             </h1>
           </Link>
           <Link
-            href=""
+            href="/admin/pages/accessRecords"
             className="flex flex-col justify-center items-center w-full md:w-1/3 h-60 bg-blue-500 rounded-xl shadow-md hover:cursor-pointer"
             data-attribute="access-records"
           >
@@ -62,12 +62,25 @@ export default function Admin() {
   );
 }
 
+interface CustomSession extends Session {
+  role: string;
+}
+
 export async function getServerSideProps(context: any) {
   const session = await getSession(context);
+  const sesh = { ...session } as CustomSession;
   if (!session) {
     return {
       redirect: {
         destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  if (sesh.role != "admin") {
+    return {
+      redirect: {
+        destination: "/404",
         permanent: false,
       },
     };

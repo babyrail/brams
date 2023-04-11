@@ -4,26 +4,34 @@ import jwt from "jsonwebtoken";
 export default async function handler(req, res) {
   const { method } = req;
   //get token from bearer token
-  const token = req.headers.authorization.split(" ")[1];
-  //verify token
-  const verified = jwt.verify(token, process.env.SECRET);
-  //get user id from verified token
-  const { privilege } = verified;
+  if (req.headers.authorization) {
+    const token = req.headers.authorization.split(" ")[1];
+    //verify token
+    const verified = jwt.verify(token, process.env.SECRET) as {
+      privilege: string;
+      _id: string;
+    };
+    //get user id from verified token
+    const { privilege } = verified;
+  }
+
   await dbConnect();
 
-  if (privilege === "admin") {
-    switch (method) {
-      case "GET":
-        try {
-          const records = await Records.find(
-            {}
-          ); /* find all the data in our database */
-          res.status(200).json({ records });
-        } catch (error) {
-          res.status(400).json({ error: error });
-        }
-        break;
-      case "POST":
+  switch (method) {
+    case "GET":
+      try {
+        const { firstName, lastName } = req.query;
+        const records = await Records.findOne({
+          firstName,
+          lastName,
+        }); /* find all the data in our database */
+        res.status(200).json({ records });
+      } catch (error) {
+        res.status(400).json({ error: error });
+      }
+      break;
+    case "POST":
+      if (privilege === "admin") {
         try {
           const record = await Records.create(
             req.body
@@ -33,20 +41,9 @@ export default async function handler(req, res) {
           res.status(400).json({ error: error });
         }
         break;
-      default:
-        res.status(400).json({ success: false });
-        break;
-    }
-  } else {
-    if (method === "GET") {
-      try {
-        const records = await Records.find(
-          {}
-        ); /* find all the data in our database */
-        res.status(200).json({ records });
-      } catch (error) {
-        res.status(400).json({ error: error });
       }
-    }
+    default:
+      res.status(400).json({ success: false });
+      break;
   }
 }

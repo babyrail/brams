@@ -15,6 +15,7 @@ import jwt from "jsonwebtoken";
 // };
 interface CustomUser extends AuthUser {
   role: string;
+  token: string;
 }
 interface CustomSession extends Session {
   role: string;
@@ -34,7 +35,7 @@ const authOptions: NextAuthOptions = {
         username: { label: "Username", type: "text", placeholder: "Username" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials, req): Promise<CustomUser | null> {
         const { username, password } = credentials as {
           username: string;
           password: string;
@@ -48,6 +49,7 @@ const authOptions: NextAuthOptions = {
           // Check user's role or privilege and return session data accordingly
           if (privilege === "admin") {
             return {
+              id: user._id,
               name: username,
               role: "admin",
               token: jwt.sign({ username, privilege }, process.env.SECRET, {
@@ -56,6 +58,7 @@ const authOptions: NextAuthOptions = {
             };
           } else if (privilege === "basic") {
             return {
+              id: user._id,
               name: username,
               role: "basic",
               token: jwt.sign({ username, privilege }, process.env.SECRET, {
