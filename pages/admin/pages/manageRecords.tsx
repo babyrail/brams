@@ -1,5 +1,7 @@
 import React from "react";
 import Link from "next/link";
+import {getSession} from "next-auth/react"
+import {Session} from "next-auth"
 export default function manageRecords() {
   return (
     <div>
@@ -29,4 +31,30 @@ export default function manageRecords() {
       </div>
     </div>
   );
+}
+
+interface CustomSession extends Session {
+  role: string;
+}
+
+export async function getServerSideProps(context: any) {
+  const session = await getSession(context);
+  const sesh = { ...session } as CustomSession;
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  if (sesh.role != "admin") {
+    return {
+      redirect: {
+        destination: "/404",
+        permanent: false,
+      },
+    };
+  }
+  return { props: { ...session } };
 }

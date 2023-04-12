@@ -123,39 +123,49 @@ export default function CreateRecord({ sesh }) {
             }
           });
         }
+        if(!response.ok){
+         MySwal.fire({
+          title: "Error",
+          text: "There has been an error saving your record",
+          icon: "error",
+          confirmButtonText: "Ok"
+         })
+        }
       }
     };
     upload();
   }
   return (
     <>
-      <div className="container mx-auto ">
-        <h1>Create Record</h1>
-        <form method="post" onSubmit={handleOnSubmit} className="flex flex-col">
+      <div className="container mx-auto p-10 ">
+        
+        <form method="post" onSubmit={handleOnSubmit} className="flex flex-col bg-white rounded-lg px-8 shadow-md mt-14 pb-10">
+        <h1 className="text-2xl font-Poppins font-semibold border-b border-b-gray-300 pt-10 pb-5 mb-5 ">Create Record</h1> 
           {/* Name */}
-          <label htmlFor="firstName">First Name</label>
-          <input type="text" name="firstName" id="firstName" />
+          <label className="text-lg font-Poppins font-normal" htmlFor="firstName">First Name</label>
+          <input placeholder="Ex. JUAN" className="bg-customWhite rounded-md border h-11 shadow-lg p-3"  type="text" name="firstName" id="firstName" />
 
-          <label htmlFor="lastName">Last Name</label>
-          <input type="text" name="lastName" id="lastName" />
+          <label className="text-lg font-Poppins font-normal" htmlFor="lastName">Last Name</label>
+          <input placeholder="Ex. DELA CRUZ" className="bg-customWhite rounded-md border h-11 shadow-lg p-3"  type="text" name="lastName" id="lastName" />
 
-          <label htmlFor="middleName">Middle Name</label>
-          <input type="text" name="middleName" id="middleName" />
+          <label className="text-lg font-Poppins font-normal" htmlFor="middleName">Middle Name</label>
+          <input placeholder="Ex. SANTOS" className="bg-customWhite rounded-md border h-11 shadow-lg p-3"  type="text" name="middleName" id="middleName" />
 
-          <label htmlFor="suffix">Suffix</label>
-          <select name="suffix" id="suffix">
-            <option value="none">None</option>
-            <option value="Jr">Jr</option>
-            <option value="Sr">Sr</option>
-            <option value="III">III</option>
-            <option value="IV">IV</option>
-            <option value="V">V</option>
+          <label className="text-lg font-Poppins font-normal" htmlFor="suffix">Suffix</label>
+          <select className="font-Poppins h-11 bg-customWhite rounded-md border shadow-lg p-3" name="suffix" id="suffix">
+            <option className="font-Poppins" value="none">None</option>
+            <option className="font-Poppins" value="Jr">Jr</option>
+            <option className="font-Poppins" value="Sr">Sr</option>
+            <option className="font-Poppins" value="III">III</option>
+            <option className="font-Poppins" value="IV">IV</option>
+            <option className="font-Poppins" value="V">V</option>
           </select>
           {/* birthdate */}
-          <label htmlFor="birthDate">Birth Date</label>
-          <input type="date" name="birthDate" id="birthDate" />
+          <label htmlFor="birthDate" className="text-lg font-Poppins font-normal">Birth Date</label>
+          <input className="p-3 bg-customWhite shadow-lg rounded-md border" type="date" name="birthDate" id="birthDate" />
           {/* Gender */}
           <div>
+            <label htmlFor="gender" className="text-lg font-Poppins font-normal">Gender</label>
             <div className="flex gap-1">
               <input type="radio" name="gender" value="male" />
               <p>Male</p>
@@ -166,8 +176,8 @@ export default function CreateRecord({ sesh }) {
             </div>
           </div>
           {/* Civil Status */}
-          <label htmlFor="civilStatus">Civil Status</label>
-          <select name="civilStatus" id="civilStatus">
+          <label className="font-Poppins text-lg font-normal" htmlFor="civilStatus">Civil Status</label>
+          <select className="bg-customWhite border h-10 p-2 rounded-md shadow-lg" name="civilStatus" id="civilStatus">
             <option value="single">Single</option>
             <option value="married">Married</option>
             <option value="widowed">Widowed</option>
@@ -175,39 +185,40 @@ export default function CreateRecord({ sesh }) {
             <option value="divorced">Divorced</option>
           </select>
           {/* Occupation */}
-          <label htmlFor="occupation">Occupation</label>
-          <input type="text" name="occupation" id="occupation" />
+          <label className="font-Poppins text-lg font-normal" htmlFor="occupation">Occupation</label>
+          <input className="bg-customWhite border h-10 p-3 rounded-md shadow-lg" type="text" name="occupation" id="occupation" />
           {/* Contact Info */}
-          <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" />
-          <label htmlFor="contactNumber">Contact Number</label>
-          <input type="number" name="contactNumber" id="contactNumber" />
+          <label className="font-Poppins text-lg font-normal" htmlFor="email">Email</label>
+          <input className="bg-customWhite border h-10 p-3 rounded-md shadow-lg" type="email" name="email" id="email" />
+          <label className="font-Poppins text-lg font-normal" htmlFor="contactNumber">Contact Number</label>
+          <input className="bg-customWhite border h-10 p-3 rounded-md shadow-lg" type="number" name="contactNumber" id="contactNumber" />
           {/* Address */}
-          <label htmlFor="address">Address Line 1</label>
-          <input type="text" name="address" id="address" />
-          <label htmlFor="address2">Address Line 2</label>
-          <input type="text" name="address2" id="address2" />
-          <label htmlFor="province">Province</label>
-          <input type="text" name="province" id="province" />
-          <label htmlFor="city">City</label>
-          <input type="text" name="city" id="city" />
-          <label htmlFor="barangay">Barangay</label>
-          <input type="text" name="barangay" id="barangay" />
+          <label className="font-Poppins text-lg font-normal" htmlFor="address">Address Line 1</label>
+          <input className="bg-customWhite border h-10 p-3 rounded-md shadow-lg" type="text" name="address" id="address" />
+          <label className="font-Poppins text-lg font-normal" htmlFor="address2">Address Line 2</label>
+          <input className="bg-customWhite border h-10 p-3 rounded-md shadow-lg" type="text" name="address2" id="address2" />
+          <label className="font-Poppins text-lg font-normal" htmlFor="province">Province</label>
+          <input className="bg-customWhite border h-10 p-3 rounded-md shadow-lg" type="text" name="province" id="province" />
+          <label className="font-Poppins text-lg font-normal" htmlFor="city">City</label>
+          <input className="bg-customWhite border h-10 p-3 rounded-md shadow-lg" type="text" name="city" id="city" />
+          <label className="font-Poppins text-lg font-normal" htmlFor="barangay">Barangay</label>
+          <input className="bg-customWhite border h-10 p-3 rounded-md shadow-lg" type="text" name="barangay" id="barangay" />
           {/* family information */}
-          <label htmlFor="isFamilyHead">Are you the head of the family?</label>
-          <input type="checkbox" name="isFamilyHead" id="isFamilyHead" />
+          <div className="flex gap-4 my-5"><label className="font-Poppins text-lg font-normal" htmlFor="isFamilyHead">Are you the head of the family?</label>
+          <input className="" type="checkbox" name="isFamilyHead" id="isFamilyHead" /></div>
           {/* Records */}
-          <label htmlFor="brgy_records">Barangay Records</label>
-          <input type="text" name="brgy_records" id="brgy_records" />
+          <label className="font-Poppins text-lg font-normal" htmlFor="brgy_records">Barangay Records</label>
+          <input className="bg-customWhite border h-10 p-3 rounded-md shadow-lg" type="text" name="brgy_records" id="brgy_records" />
           {/* Image */}
-          <label htmlFor="image">Image</label>
+          <label className="font-Poppins text-lg font-normal mb-2" htmlFor="image">Image</label>
           <input
+         
             type="file"
             name="image"
             id="image"
             onChange={handleOnChange}
           />
-          <button type="submit">Submit</button>
+          <button type="submit" className="bg-blue-500 w-full md:w-fit p-2 rounded-lg font-Poppins text-customWhite mt-5">Submit</button>
         </form>
       </div>
     </>
