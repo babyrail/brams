@@ -1,6 +1,6 @@
 import dbConnect from "../../../lib/dbConnect";
 import Records from "../../../models/BrgyRecords";
-import jwt from "jsonwebtoken";
+import jwt, { Secret } from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -15,7 +15,7 @@ export default async function handler(
   if (req.headers.authorization) {
     const token = req.headers.authorization.split(" ")[1];
     //verify token
-    const verified = jwt.verify(token, process.env.SECRET) as {
+    const verified = jwt.verify(token, process.env.SECRET as Secret) as {
       privilege: string;
       _id: string;
     };
