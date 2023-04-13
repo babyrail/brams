@@ -4,12 +4,13 @@ import dbConnect from "../../../lib/dbConnect";
 import { getSession } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/router";
+
 export default function accessRecords() {
   const [searchFirstName, setSearchFirstName] = useState("");
   const [searchLastName, setSearchLastName] = useState("");
   const [searchMidName, setSearchMidName] = useState("");
-  const [record, setRecord] = useState(null);
-  const handleOnSubmit = async (e) => {
+  const [record, setRecord] = useState({ records: null } as { records: any });
+  const handleOnSubmit = async (e: any) => {
     e.preventDefault();
 
     console.log(searchFirstName, searchLastName, searchMidName);
@@ -26,7 +27,7 @@ export default function accessRecords() {
       console.log(record);
     }
   };
-  const returnDate = (date) => {
+  const returnDate = (date: Date) => {
     const newDate = new Date(date);
 
     // Get day, month, and year from the date object
@@ -129,8 +130,8 @@ export default function accessRecords() {
                 <div className=" md:w-1/5 h-full p-5">
                   <img
                     className="w-full rounded-md aspect-square object-cover"
-                    src={record.records.image}
-                    alt={record.records.firstName + record.records.lastName}
+                    src={record?.records?.image}
+                    alt={record?.records?.firstName + record?.records?.lastName}
                   />
                 </div>
                 <div className="flex flex-col  gap-12 w-full md:w-4/5 border-l border-l-gray-300 h-full p-10  items-center">
@@ -140,7 +141,7 @@ export default function accessRecords() {
                         First Name:
                       </h1>
                       <h1 className="font-Poppins font-semibold text-lg ">
-                        {record.records.firstName}
+                        {record?.records?.firstName}
                       </h1>
                     </div>
                     <div className="">
@@ -148,7 +149,7 @@ export default function accessRecords() {
                         Middle Name:
                       </h1>
                       <h1 className="font-Poppins font-semibold text-lg ">
-                        {record.records.middleName}
+                        {record?.records?.middleName}
                       </h1>
                     </div>
                     <div className="">
@@ -156,7 +157,7 @@ export default function accessRecords() {
                         Last Name:
                       </h1>
                       <h1 className="font-Poppins font-semibold text-lg ">
-                        {record.records.lastName}
+                        {record?.records?.lastName}
                       </h1>
                     </div>
                     <div className="">
@@ -164,7 +165,7 @@ export default function accessRecords() {
                         Suffix:
                       </h1>
                       <h1 className="font-Poppins font-semibold text-lg ">
-                        {record.records.suffix}
+                        {record?.records?.suffix}
                       </h1>
                     </div>
                   </div>
@@ -174,7 +175,7 @@ export default function accessRecords() {
                         Gender:
                       </h1>
                       <h1 className="font-Poppins font-semibold text-lg ">
-                        {record.records.gender}
+                        {record?.records?.gender}
                       </h1>
                     </div>
                     <div className="">
@@ -182,7 +183,7 @@ export default function accessRecords() {
                         Birthdate:
                       </h1>
                       <h1 className="font-Poppins font-semibold text-lg ">
-                        {returnDate(record.records.birthDate)}
+                        {returnDate(record?.records?.birthDate)}
                       </h1>
                     </div>
                     <div className="">
@@ -190,7 +191,7 @@ export default function accessRecords() {
                         Civil Status:
                       </h1>
                       <h1 className="font-Poppins font-semibold text-lg ">
-                        {record.records.civilStatus}
+                        {record?.records?.civilStatus}
                       </h1>
                     </div>
                     <div className="">
@@ -198,7 +199,7 @@ export default function accessRecords() {
                         Occupation:
                       </h1>
                       <h1 className="font-Poppins font-semibold text-lg ">
-                        {record.records.occupation}
+                        {record?.records?.occupation}
                       </h1>
                     </div>
                   </div>
@@ -291,7 +292,7 @@ export default function accessRecords() {
               </div>
             ) : (
               <>
-                {record.records.brgy_records.map((brgy) => (
+                {record.records.brgy_records.map((brgy: any) => (
                   <div className="flex flex-col md:flex-row w-full gap-36 pt-5 pb-2 border-b border-b-gray-300">
                     <div>
                       <h1 className="font-Poppins font-normal text-sm">
@@ -312,7 +313,7 @@ export default function accessRecords() {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: any) {
   const session = await getSession(context);
   if (!session) {
     return {

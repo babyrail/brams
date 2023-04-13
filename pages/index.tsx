@@ -25,7 +25,7 @@ export async function getServerSideProps(context: any) {
   if (sesh?.role === "admin") {
     return {
       redirect: {
-        destination: "/admin",
+        destination: "/admin/home",
         permanent: false,
       },
     };

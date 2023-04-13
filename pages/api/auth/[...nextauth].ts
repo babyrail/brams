@@ -6,9 +6,9 @@ import NextAuth, {
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import dbConnect from "../../../lib/dbConnect";
-import User from "../../../models/userRecords";
+import User from "../../../models/adminAccounts";
 import jwt from "jsonwebtoken";
-
+import { Secret } from "jsonwebtoken";
 // const secret = process.env.SECRET;
 // const createToken = (_id, privilege) => {
 //   return jwt.sign({ _id, privilege }, process.env.SECRET, { expiresIn: "3d" });
@@ -53,19 +53,29 @@ const authOptions: NextAuthOptions = {
               id: user._id,
               name: username,
               role: "admin",
-              token: jwt.sign({ username, privilege }, process.env.SECRET, {
-                expiresIn: "3d",
-              }),
+              token: jwt.sign(
+                { username, privilege },
+                process.env.SECRET as Secret,
+                {
+                  expiresIn: "3d",
+                }
+              ),
             };
           } else if (privilege === "basic") {
             return {
               id: user._id,
               name: username,
               role: "basic",
-              token: jwt.sign({ username, privilege }, process.env.SECRET, {
-                expiresIn: "3d",
-              }),
+              token: jwt.sign(
+                { username, privilege },
+                process.env.SECRET as Secret,
+                {
+                  expiresIn: "3d",
+                }
+              ),
             };
+          } else {
+            return null;
           }
         } else {
           return null;
