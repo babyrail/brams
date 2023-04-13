@@ -6,7 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import { AppProps } from "next/app";
 import React from "react";
 
-const MyApp: React.FC = ({ Component, pageProps }: AppProps) => {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   if (Component.name === "Login") {
     return (
       <>
