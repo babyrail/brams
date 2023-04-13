@@ -22,7 +22,7 @@ export default function NavBar() {
               </h1>
             </div>
           </Link>
-          {sesh.role === "admin" ? (
+          {sesh.role === "superadmin" ? (
             <div className="hidden md:flex flex-row  w-5/12 justify-between py-2">
               <Link href="/admin/pages/manageUsers">
                 <div className=" px-5 py-3 text-customWhite flex flex-col justify-center items-center bg-blue-500 shadow-md rounded-xl font-Poppins text-center">

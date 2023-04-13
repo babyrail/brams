@@ -22,7 +22,7 @@ export async function getServerSideProps(context: any) {
       },
     };
   }
-  if (sesh?.role === "admin") {
+  if (sesh?.role === "superadmin") {
     return {
       redirect: {
         destination: "/admin/home",

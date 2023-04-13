@@ -77,7 +77,7 @@ export async function getServerSideProps(context: any) {
       },
     };
   }
-  if (sesh.role != "admin") {
+  if (sesh.role != "superadmin" && sesh.role != "admin") {
     return {
       redirect: {
         destination: "/404",

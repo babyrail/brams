@@ -1,12 +1,11 @@
 import NextAuth, {
-  Awaitable,
   NextAuthOptions,
   User as AuthUser,
   Session,
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import dbConnect from "../../../lib/dbConnect";
-import User from "../../../models/adminAccounts";
+import Admin from "../../../models/adminAccounts";
 import jwt from "jsonwebtoken";
 import { Secret } from "jsonwebtoken";
 // const secret = process.env.SECRET;
@@ -42,17 +41,17 @@ const authOptions: NextAuthOptions = {
           password: string;
         };
         await dbConnect();
-        const user = await User.login(username, password);
+        const user = await Admin.login(username, password);
         if (user) {
           // Extract role or privilege data from user object
           const { username, privilege } = user;
           console.log(`${privilege}`);
           // Check user's role or privilege and return session data accordingly
-          if (privilege === "admin") {
+          if (privilege === "superadmin") {
             return {
               id: user._id,
               name: username,
-              role: "admin",
+              role: "superadmin",
               token: jwt.sign(
                 { username, privilege },
                 process.env.SECRET as Secret,
@@ -61,11 +60,11 @@ const authOptions: NextAuthOptions = {
                 }
               ),
             };
-          } else if (privilege === "basic") {
+          } else if (privilege === "admin") {
             return {
               id: user._id,
               name: username,
-              role: "basic",
+              role: "admin",
               token: jwt.sign(
                 { username, privilege },
                 process.env.SECRET as Secret,

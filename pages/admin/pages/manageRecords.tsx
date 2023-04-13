@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import {getSession} from "next-auth/react"
-import {Session} from "next-auth"
+import { getSession } from "next-auth/react";
+import { Session } from "next-auth";
 export default function manageRecords() {
   return (
     <div>
@@ -48,7 +48,7 @@ export async function getServerSideProps(context: any) {
       },
     };
   }
-  if (sesh.role != "admin") {
+  if (sesh.role != "superadmin") {
     return {
       redirect: {
         destination: "/404",

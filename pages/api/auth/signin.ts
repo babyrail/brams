@@ -1,6 +1,6 @@
 import { ObjectId } from "mongoose";
 import dbConnect from "../../../lib/dbConnect";
-import User from "../../../models/adminAccounts";
+import Admin from "../../../models/adminAccounts";
 import jwt, { Secret } from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -20,7 +20,7 @@ export default async function handler(
 
   if (method == "POST") {
     try {
-      const user = (await User.login(username, password)) as {
+      const user = (await Admin.login(username, password)) as {
         privilege: string;
         username: string;
         _id: ObjectId;

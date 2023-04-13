@@ -23,13 +23,9 @@ export default async function handler(
     //get user id from verified token
     privilege = verified.privilege;
   }
-  if (req.headers.authorization == null) {
-    console.log("i want to die");
-  }
 
   await dbConnect();
-  console.log(method);
-  console.log(privilege);
+
   switch (method) {
     case "GET":
       try {
@@ -50,7 +46,7 @@ export default async function handler(
       }
       break;
     case "POST":
-      if (privilege == "admin") {
+      if (privilege == "superadmin") {
         try {
           const record = await Records.create(
             req.body

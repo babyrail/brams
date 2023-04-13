@@ -40,6 +40,7 @@ export default function Login({}) {
     e.preventDefault();
     setLoading(true);
     const payload = { username, password };
+    console.log(payload);
     const res = await signIn("credentials", { ...payload, redirect: false });
     setLoading(false);
     if (res?.status != 200) {
@@ -151,7 +152,7 @@ export async function getServerSideProps(context: any) {
   const session = (await getSession(context)) as any;
   const sesh = { ...session };
   if (session) {
-    if (sesh.role === "admin") {
+    if (sesh.role === "superadmin") {
       return {
         redirect: {
           destination: "/admin/home",
@@ -159,10 +160,10 @@ export async function getServerSideProps(context: any) {
         },
       };
     }
-    if (sesh.role === "basic") {
+    if (sesh.role === "admin") {
       return {
         redirect: {
-          destination: "/user",
+          destination: "/admin/home",
           permanent: false,
         },
       };

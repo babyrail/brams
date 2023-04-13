@@ -1,9 +1,6 @@
 import React from "react";
-import Records from "../../../models/BrgyRecords";
-import dbConnect from "../../../lib/dbConnect";
 import { getSession } from "next-auth/react";
 import { useState } from "react";
-import { useRouter } from "next/router";
 
 export default function accessRecords() {
   const [searchFirstName, setSearchFirstName] = useState("");

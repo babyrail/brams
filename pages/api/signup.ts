@@ -1,6 +1,6 @@
 import { ObjectId } from "mongoose";
 import dbConnect from "../../lib/dbConnect";
-import User from "../../models/adminAccounts";
+import Admin from "../../models/adminAccounts";
 import jwt, { Secret } from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
 const createToken = (_id: ObjectId) => {
@@ -20,7 +20,7 @@ export default async function handler(req: Request, res: NextApiResponse) {
 
   if (method == "POST") {
     try {
-      const user = await User.signup(username, password, privilege);
+      const user = await Admin.signup(username, password, privilege);
 
       res.status(200).json({ username });
     } catch (error: any) {

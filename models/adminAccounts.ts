@@ -1,22 +1,22 @@
 import mongoose, { Document, Model, Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 import { Awaitable } from "next-auth";
-export interface IUser extends Document {
+export interface IAdmin extends Document {
   username: string;
   password: string;
   privilege: string | null;
 }
 
-export interface IUserModel extends Model<IUser> {
-  login(username: string, password: string): Awaitable<IUser | null>;
+export interface IAdminModel extends Model<IAdmin> {
+  login(username: string, password: string): Awaitable<IAdmin | null>;
   signup(
     username: string,
     password: string,
     privilege: string
-  ): Awaitable<IUser | null>;
+  ): Awaitable<IAdmin | null>;
 }
 
-const userSchema = new Schema<IUser>({
+const adminSchema = new Schema<IAdmin>({
   username: {
     type: String,
     required: true,
@@ -31,10 +31,10 @@ const userSchema = new Schema<IUser>({
   },
 });
 
-userSchema.statics.login = async function (
+adminSchema.statics.login = async function (
   username: string,
   password: string
-): Promise<IUser | null> {
+): Promise<IAdmin | null> {
   if (!username || !password) {
     throw new Error("Please provide a username and password");
   }
@@ -51,11 +51,11 @@ userSchema.statics.login = async function (
   return user;
 };
 
-userSchema.statics.signup = async function (
+adminSchema.statics.signup = async function (
   username: string,
   password: string,
   privilege: string
-): Promise<IUser | null> {
+): Promise<IAdmin | null> {
   if (!username || !password) {
     throw new Error("Please provide a username and password");
   }
@@ -75,7 +75,7 @@ userSchema.statics.signup = async function (
   return user;
 };
 
-const User: IUserModel = (mongoose.models.User ||
-  model<IUser, IUserModel>("User", userSchema)) as IUserModel;
+const Admin: IAdminModel = (mongoose.models.Admin ||
+  model<IAdmin, IAdminModel>("Admin", adminSchema)) as IAdminModel;
 
-export default User;
+export default Admin;
