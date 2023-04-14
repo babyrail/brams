@@ -1,5 +1,1 @@
-
-
-export default function ForbiddenPage(){
-    
-}
+export default function ForbiddenPage() {}

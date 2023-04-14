@@ -52,6 +52,7 @@ export default function NavBar() {
           )}
           {session && (
             <button
+              type="button"
               title="sign out"
               onClick={() => {
                 signOut();
