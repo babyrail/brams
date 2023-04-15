@@ -1,81 +1,36 @@
-# MongoDB and Mongoose with Next.js
+Barangay Ayuda and Records Management System
+The Barangay Ayuda and Records Management System is a web application designed to assist barangays (small administrative divisions in the Philippines) in managing their aid programs and records effectively. The system provides features for managing aid requests, processing aid applications, tracking aid distributions, and maintaining records of beneficiaries and aid programs.
 
-This example shows how you can use a MongoDB database to support your Next.js application.
+Features
+Aid Request Management: Allows residents to submit aid requests online, and barangay officials to review and process aid applications.
+Aid Distribution Tracking: Enables barangay officials to track aid distributions, including the type of aid, quantity, and recipient information.
+Beneficiary Management: Provides a centralized database for managing beneficiary information, including personal details, aid history, and eligibility status.
+User Authentication and Authorization: Integrates NextAuth.js for secure user authentication and authorization, allowing only authorized users to access the system.
+Data Management: Utilizes MongoDB as the database for storing aid requests, aid distributions, beneficiary information, and other relevant data.
+Responsive UI: Built with Next.js and Tailwind CSS, the system provides a responsive user interface that works seamlessly on different devices and screen sizes.
+Technologies Used
+The Barangay Ayuda and Records Management System is built using the following technologies:
 
-**Pet** is an application that allows users to add their pets' information (e.g., name, owner's name, diet, age, dislikes, likes, and photo). They can also delete it or edit it anytime.
+Frontend: Next.js, React, Tailwind CSS
+Backend: Next.js API Routes, NextAuth.js for authentication
+Database: MongoDB, Mongoose for communication
+Deployment: Vercel for both frontend and backend
+Version Control: Git
+Installation and Usage
+To install and use the Barangay Ayuda and Records Management System, follow these steps:
 
-## Deploy your own
+Clone the repository from GitHub: git clone https://github.com/yourusername/barangay-ayuda.git
+Install the dependencies: npm install
+Configure the environment variables: Create a .env file in the root directory of the project and set the necessary environment variables, such as database connection details, NextAuth.js configuration, etc.
+Start the development server: npm run dev
+Access the application in your web browser at http://localhost:3000
+Contributing
+Contributions to the Barangay Ayuda and Records Management System are welcome! If you want to contribute to the project, please follow these steps:
 
-Once you have access to [the environment variables you'll need](#step-2-set-up-environment-variables), deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-mongodb-mongoose&project-name=with-mongodb-mongoose&repository-name=with-mongodb-mongoose&env=MONGODB_URI&envDescription=Required%20to%20connect%20the%20app%20with%20MongoDB&envLink=https://github.com/vercel/next.js/tree/canary/examples/with-mongodb-mongoose%23step-2-set-up-environment-variables)
-
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-mongodb-mongoose with-mongodb-mongoose-app
-```
-
-```bash
-yarn create next-app --example with-mongodb-mongoose with-mongodb-mongoose-app
-```
-
-```bash
-pnpm create next-app --example with-mongodb-mongoose with-mongodb-mongoose-app
-```
-
-## Configuration
-
-### Step 1. Get the connection string of your MongoDB server
-
-In the case of MongoDB Atlas, it should be a string like this:
-
-```
-mongodb+srv://<username>:<password>@my-project-abc123.mongodb.net/test?retryWrites=true&w=majority
-```
-
-For more details, follow this [MongoDB Guide](https://docs.mongodb.com/guides/server/drivers/) on how to connect to MongoDB.
-
-### Step 2. Set up environment variables
-
-Copy the `.env.local.example` file in this directory to `.env.local` (which will be ignored by Git):
-
-```bash
-cp .env.local.example .env.local
-```
-
-Then set each variable on `.env.local`:
-
-- `MONGODB_URI` should be the MongoDB connection string you got from step 1.
-
-### Step 3. Run Next.js in development mode
-
-```bash
-npm install
-npm run dev
-
-# or
-
-yarn install
-yarn dev
-```
-
-Your app should be up and running on [http://localhost:3000](http://localhost:3000)! If it doesn't work, post on [GitHub discussions](https://github.com/vercel/next.js/discussions).
-
-## Deploy on Vercel
-
-You can deploy this app to the cloud with [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
-
-#### Deploy Your Local Project
-
-To deploy your local project to Vercel, push it to GitHub/GitLab/Bitbucket and [import to Vercel](https://vercel.com/import/git?utm_source=github&utm_medium=readme&utm_campaign=next-example).
-
-**Important**: When you import your project on Vercel, make sure to click on **Environment Variables** and set them to match your `.env.local` file.
-
-#### Deploy from Our Template
-
-Alternatively, you can deploy using our template by clicking on the Deploy button below.
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-mongodb-mongoose&project-name=with-mongodb-mongoose&repository-name=with-mongodb-mongoose&env=MONGODB_URI&envDescription=Required%20to%20connect%20the%20app%20with%20MongoDB&envLink=https://github.com/vercel/next.js/tree/canary/examples/with-mongodb-mongoose%23step-2-set-up-environment-variables)
+Fork the repository
+Create a new branch for your feature or bugfix: git checkout -b feature/your-feature-name
+Make your changes and commit them: git commit -m "Description of your changes"
+Push your changes to your forked repository: git push origin feature/your-feature-name
+Create a pull request to the main repository for review.
+License
+The Barangay Ayuda and Records Management System is open-source software released under the MIT License. Feel free to use, modify, and distribute the system as per the terms of the license.
