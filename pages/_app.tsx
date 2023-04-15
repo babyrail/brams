@@ -7,7 +7,7 @@ import { AppProps } from "next/app";
 import React from "react";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  if (Component.name === "Login") {
+  if (Component.name === "Login" || Component.name === "Signup") {
     return (
       <>
         <SessionProvider session={pageProps.session}>

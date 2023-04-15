@@ -5,17 +5,24 @@ import dbConnect from "../lib/dbConnect";
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const Schema = mongoose.Schema;
 
-
 export interface IUser extends Document {
   username: string;
   password: string;
   verified: boolean;
   user_id: ObjectId;
+  verificationCode?: number;
+  expirationTime?: Date;
 }
 
 export interface IUserModel extends Model<IUser> {
   login(username: string, password: string): Promise<IUser | null>;
-  signup(firstName: string, middleName: string, lastName: string, username: string, password: string): Promise<IUser | null>;
+  signup(
+    firstName: string,
+    middleName: string,
+    lastName: string,
+    username: string,
+    password: string
+  ): Promise<IUser | null>;
 }
 
 const userSchema = new Schema({
@@ -34,6 +41,12 @@ const userSchema = new Schema({
   user_id: {
     type: ObjectId,
     required: true,
+  },
+  verificationCode: {
+    type: Number,
+  },
+  expirationTime: {
+    type: Date,
   },
 });
 
@@ -57,37 +70,58 @@ userSchema.statics.login = async function (
   return user;
 };
 
-userSchema.statics.signup = async function(firstName: string, middleName: string, lastName: string, username: string, password: string): Promise<IUser| null>{
-  if(!firstName || !lastName || !username || !password){
+userSchema.statics.signup = async function (
+  firstName: string,
+  middleName: string,
+  lastName: string,
+  username: string,
+  password: string
+): Promise<IUser | null> {
+  if (!firstName || !lastName || !username || !password) {
     throw new Error("Fill up the everything");
   }
-  await dbConnect()
-  const exists = await fetch(
+  await dbConnect();
+  const exists = (await fetch(
     `http://localhost:3000/api/records/?firstName=${firstName.toUpperCase()}&lastName=${lastName.toUpperCase()}&middleName=${middleName.toUpperCase()}`
-  ) as any;
+  )) as any;
 
-  if(exists.ok){
-    const response = await exists.json()
-    console.log(exists);
-    console.log(response);
-    console.log(response?.records._id)
-    console.log(response?.records.firstName)
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password,salt);
-   
-    const user = await this.create({username, password: hash, verified: false, user_id: response?.records._id})
-    return user;
-  }
-  if(!exists){
+  const response = await exists.json();
+  if (response.records == null) {
     throw new Error("Not a resident");
   }
-  else{
-    throw new Error("error")
+
+  const userExists = await this.findOne({ username });
+  if (userExists) {
+    throw new Error("Username already exists");
   }
 
- 
-}
+  const userExists2 = await this.findOne({ user_id: response?.records._id });
+  if (userExists2) {
+    throw new Error("Resident already has an account");
+  }
 
-const User: IUserModel = (mongoose.models.User|| model<IUser, IUserModel>('User', userSchema)) as IUserModel;
+  //
+
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(password, salt);
+
+  //generate random 4 digit number
+  const verificationCode = Math.floor(1000 + Math.random() * 9000);
+  //generea random 5 minute expiration time
+  const expirationTime = new Date(Date.now() + 5 * 60 * 1000);
+
+  const user = await this.create({
+    username,
+    password: hash,
+    verified: false,
+    user_id: response?.records._id,
+    verificationCode,
+    expirationTime,
+  });
+  return user;
+};
+
+const User: IUserModel = (mongoose.models.User ||
+  model<IUser, IUserModel>("User", userSchema)) as IUserModel;
 
 export default User;
