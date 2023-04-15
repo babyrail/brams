@@ -1,4 +1,6 @@
-![Barangay Ayuda and Records Management System](./public/barms-logo.png)
+<p align="center">
+  <img src="./public/barms-logo.png" alt="Barangay Ayuda and Records Management System" width="300" height="300">
+</p>
 
 # Barangay Ayuda and Records Management System
 
