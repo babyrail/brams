@@ -1,3 +1,5 @@
+![Barangay Ayuda and Records Management System](./public/barms-logo.png)
+
 # Barangay Ayuda and Records Management System
 
 The Barangay Ayuda and Records Management System is a web application designed to assist barangays (small administrative divisions in the Philippines) in managing their aid programs and records effectively. The system provides features for managing aid requests, processing aid applications, tracking aid distributions, and maintaining records of beneficiaries and aid programs.
