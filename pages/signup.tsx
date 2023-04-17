@@ -2,7 +2,17 @@ import React from "react";
 import Wave from "react-wavify";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-export default function Signup() {
+import PuffLoader from "react-spinners/PuffLoader";
+import { CSSProperties } from "react";
+import { getSession, signIn } from "next-auth/react";
+
+const override: CSSProperties = {
+  display: "block",
+  marginTop: "10px",
+  borderColor: "red",
+};
+
+export default function Signup({ sesh }: { sesh: any }) {
   const [focusedUsername, setFocusedUsername] = useState(false);
   const [username, setUsername] = useState("");
   const [focusedPassword, setFocusedPassword] = useState(false);
@@ -15,6 +25,8 @@ export default function Signup() {
   const [lastName, setLastName] = useState("");
   const [focusedMiddleName, setFocusedMiddleName] = useState(false);
   const [middleName, setMiddleName] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const loginForm = document.getElementById("login-form");
@@ -23,7 +35,7 @@ export default function Signup() {
         // keyframes
 
         { transform: "scale(0)" },
-        { transform: "scale(1)" },
+        { transform: "scale(1" },
       ],
       {
         duration: 700,
@@ -33,10 +45,77 @@ export default function Signup() {
     );
   }, []);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("submitted");
+    setLoading(true);
+    if (password !== confirmPassword && password.length < 8) {
+      setError("Passwords do not match and must be at least 8 characters long");
+      setLoading(false);
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      setLoading(false);
+      return;
+    }
+
+    if (firstName.length < 1 || lastName.length < 1 || password.length < 0) {
+      setError("Please fill out all fields");
+      setLoading(false);
+      return;
+    }
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long");
+      setLoading(false);
+      return;
+    }
+    setError("");
+    const payload = {
+      username,
+      password,
+      firstName,
+      lastName,
+      middleName,
+    };
+
+    const response = await fetch("/api/user/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) {
+      const data = await response.json();
+      setError(data.error);
+      setLoading(false);
+      return;
+    }
+    const data = await response.json();
+    setLoading(false);
+    console.log(data);
+
+    const signInPayload = {
+      username,
+      password,
+    };
+    const login = await signIn("user-login", {
+      ...signInPayload,
+      redirect: false,
+    });
+    if (login?.status != 200) {
+      if (login?.error) {
+        setError(login.error);
+      } else {
+        setError("");
+      }
+    } else {
+      setError("");
+      window.location.reload();
+    }
   };
+
   return (
     <>
       <Wave
@@ -52,7 +131,7 @@ export default function Signup() {
       />
       <div className="  w-full bg-auto h-full min-h-screen  grid place-items-center py-10 ">
         <div
-          className="w-[90%] md:w-1/2 h-fit  mx-auto rounded-2xl drop-shadow-2xl relative z-10 flex flex-col-reverse md:flex-row overflow-hidden scale-0 "
+          className="w-[90%] md:w-1/2 h-fit  mx-auto rounded-2xl drop-shadow-2xl relative z-10 flex flex-col-reverse md:flex-row overflow-hidden scale-0   "
           id="login-form"
         >
           <div className="bg-gradient-to-b from-[#00ADD8] to-[#338FCC] h-2/3 md:h-full md:py-20  w-full md:w-1/2 md:scale-100 ">
@@ -75,7 +154,7 @@ export default function Signup() {
                     title="firstName"
                     name="firstName"
                     type="text"
-                    className="w-full border-b border-b-customWhite text-customBlack h-10 md:h-10 drop-shadow-md bg-customWhite p-2   focus:outline-none rounded-md "
+                    className="w-full border-b border-b-customWhite text-customBlack h-10 md:h-10 drop-shadow-md bg-customWhite p-2   focus:outline-none uppercase rounded-md "
                     onFocus={() => setFocusedFirstName(true)}
                     onBlur={() => setFocusedFirstName(false)}
                     value={firstName}
@@ -99,7 +178,7 @@ export default function Signup() {
                     title="middleName"
                     name="middleName"
                     type="text"
-                    className="w-full border-b border-b-customWhite text-customBlack h-10 md:h-10 drop-shadow-md bg-customWhite p-2   focus:outline-none rounded-md "
+                    className="w-full border-b border-b-customWhite text-customBlack h-10 md:h-10 drop-shadow-md bg-customWhite p-2   focus:outline-none uppercase rounded-md "
                     onFocus={() => setFocusedMiddleName(true)}
                     onBlur={() => setFocusedMiddleName(false)}
                     value={middleName}
@@ -123,7 +202,7 @@ export default function Signup() {
                     title="lastName"
                     name="lastName"
                     type="text"
-                    className="w-full border-b border-b-customWhite text-customBlack h-10 md:h-10 drop-shadow-md bg-customWhite p-2   focus:outline-none rounded-md "
+                    className="w-full border-b border-b-customWhite text-customBlack h-10 md:h-10 drop-shadow-md bg-customWhite p-2   focus:outline-none uppercase rounded-md "
                     onFocus={() => setFocusedLastName(true)}
                     onBlur={() => setFocusedLastName(false)}
                     value={lastName}
@@ -213,6 +292,19 @@ export default function Signup() {
                   >
                     Confirm Password
                   </label>
+                  {error && (
+                    <p className="text-red-500 text-sm" id="passwordErr">
+                      {error}
+                    </p>
+                  )}
+                  {loading && (
+                    //show success login
+                    <PuffLoader
+                      loading={loading}
+                      cssOverride={override}
+                      size={30}
+                    />
+                  )}
                 </div>
               </div>
               <div className="flex flex-col gap-5">
@@ -225,7 +317,7 @@ export default function Signup() {
               </div>
             </form>
           </div>
-          <div className="w-full  md:w-1/2 bg-white grid place-content-center rounded-t-2xl md:rounded-none p-5 md:p-0">
+          <div className="w-full  md:w-1/2 bg-bgImage bg-no-repeat bg-cover  grid place-content-center rounded-t-2xl md:rounded-none p-5 md:p-0">
             <img
               src="/barms-logo.png"
               alt=""
@@ -237,4 +329,13 @@ export default function Signup() {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps(context: any) {
+  const session = (await getSession(context)) as any;
+  const sesh = { ...session };
+
+  return {
+    props: { props: { sesh } },
+  };
 }

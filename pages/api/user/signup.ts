@@ -3,6 +3,7 @@ import dbConnect from "../../../lib/dbConnect";
 import User from "../../../models/userAccounts";
 import jwt, { Secret } from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
+
 const createToken = (_id: ObjectId) => {
   return jwt.sign({ _id }, process.env.SECRET as Secret, { expiresIn: "3d" });
 };

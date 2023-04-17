@@ -12,8 +12,6 @@ export default function accessRecords() {
 
     console.log(searchFirstName, searchLastName, searchMidName);
 
-    const form = new FormData(e.target);
-
     const response = await fetch(
       `/api/records/?firstName=${searchFirstName.toUpperCase()}&lastName=${searchLastName.toUpperCase()}&middleName=${searchMidName.toUpperCase()}`
     );

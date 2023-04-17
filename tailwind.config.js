@@ -20,10 +20,12 @@ module.exports = {
         primary: "#1994e6",
         secondary: "#885DF1",
         tertiary: "#32DFAD",
+        error: "#ff0000",
       },
       backgroundImage: {
         "hero-pattern": "url('/wave.svg')",
         bgTexture: "url('/denim.webp')",
+        bgImage: "url('/bg-image.jpg')",
       },
       keyframes: {
         wiggle: {

@@ -12,7 +12,7 @@ export default function NavBar() {
   const sesh = { ...session } as any;
   return (
     <div>
-      <div className="container-full bg-white shadow-md px-7 ">
+      <div className="container-full bg-white shadow-md px-7 relative z-100 ">
         <div className="flex flex-row justify-between items-center ">
           <Link href="/admin/home">
             <div className="flex flex-row items-center py-2  ">

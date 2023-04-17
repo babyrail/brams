@@ -66,7 +66,6 @@ userSchema.statics.login = async function (
   if (!isMatch) {
     throw new Error("Incorrect password");
   }
-
   return user;
 };
 

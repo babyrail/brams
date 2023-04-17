@@ -41,7 +41,7 @@ export default function Login({}) {
     setLoading(true);
     const payload = { username, password };
     console.log(payload);
-    const res = await signIn("credentials", { ...payload, redirect: false });
+    const res = await signIn("admin-login", { ...payload, redirect: false });
     setLoading(false);
     if (res?.status != 200) {
       if (res?.error) {

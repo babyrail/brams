@@ -2,12 +2,28 @@ import React, { useEffect } from "react";
 import Wave from "react-wavify";
 import { useState } from "react";
 import Link from "next/link";
+import { FormEventHandler } from "react";
+import { signIn } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
+import { PuffLoader } from "react-spinners";
+import { CSSProperties } from "react";
+import { GetServerSidePropsContext } from "next";
+const override: CSSProperties = {
+  display: "block",
+  marginTop: "10px",
+  borderColor: "red",
+};
+
 export default function Login() {
   const [focusedUsername, setFocusedUsername] = useState(false);
   const [username, setUsername] = useState("");
 
   const [focusedPassword, setFocusedPassword] = useState(false);
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const { data: session } = useSession();
 
   useEffect(() => {
     const loginForm = document.getElementById("login-form");
@@ -25,6 +41,24 @@ export default function Login() {
       }
     );
   }, []);
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e: any) => {
+    e.preventDefault();
+    setLoading(true);
+    const payload = { username, password };
+    const res = await signIn("user-login", { ...payload, redirect: false });
+    setLoading(false);
+    if (res?.status != 200) {
+      if (res?.error) {
+        setError(res.error);
+      } else {
+      }
+    } else {
+      setError("");
+      console.log("welcome");
+      window.location.reload();
+    }
+  };
 
   return (
     <>
@@ -48,6 +82,7 @@ export default function Login() {
             <form
               action="POST"
               className="flex flex-col justify-center  md:h-full px-10 py-10 md:py-0 relative z-10 gap-8 md:gap-10 "
+              onSubmit={handleSubmit}
             >
               <div className="border-b border-tertiary py-3">
                 <h1 className="text-lg md:text-2xl drop-shadow-md font-Poppins font-bold text-customWhite">
@@ -106,6 +141,19 @@ export default function Login() {
                   >
                     Password
                   </label>
+                  {error && (
+                    <p className="text-error text-sm font-Poppins font-semibold">
+                      {error}
+                    </p>
+                  )}
+                  {loading && (
+                    //show success login
+                    <PuffLoader
+                      loading={loading}
+                      cssOverride={override}
+                      size={30}
+                    />
+                  )}
                 </div>
               </div>
               <div className="flex flex-col gap-5">
@@ -143,4 +191,28 @@ export default function Login() {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = (await getSession(context)) as any;
+  const sesh = { ...session };
+  if (session) {
+    if (sesh.role === "user") {
+      return {
+        redirect: {
+          destination: "/user/",
+          permanent: false,
+        },
+      };
+    }
+    if (sesh.role === "unverified") {
+      return {
+        redirect: {
+          destination: "/user/unverified",
+          permanent: false,
+        },
+      };
+    }
+  }
+  return { props: { props: { session } } };
 }
