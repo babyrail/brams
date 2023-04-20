@@ -79,7 +79,7 @@ userSchema.statics.signup = async function (
   if (!firstName || !lastName || !username || !password) {
     throw new Error("Fill up the everything");
   }
-  let apiUrl: string;
+  let apiUrl = "";
   if (process.env.NODE_ENV === "development") {
     apiUrl = `http://localhost:3000/api/records/?firstName=${firstName.toUpperCase()}&lastName=${lastName.toUpperCase()}&middleName=${middleName.toUpperCase()}`;
   } else {
