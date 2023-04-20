@@ -79,13 +79,14 @@ userSchema.statics.signup = async function (
   if (!firstName || !lastName || !username || !password) {
     throw new Error("Fill up the everything");
   }
+  const environment = process.env.NODE_ENV;
   let apiUrl = "";
-  if (process.env.NODE_ENV === "development") {
+  if (environment === "development") {
     apiUrl = `http://localhost:3000/api/records/?firstName=${firstName.toUpperCase()}&lastName=${lastName.toUpperCase()}&middleName=${middleName.toUpperCase()}`;
   } else {
     apiUrl = `https://barms.vercel.app/api/records/?firstName=${firstName.toUpperCase()}&lastName=${lastName.toUpperCase()}&middleName=${middleName.toUpperCase()}`;
   }
-
+  console.log(apiUrl);
   await dbConnect();
   const exists = (await fetch(apiUrl)) as any;
 
