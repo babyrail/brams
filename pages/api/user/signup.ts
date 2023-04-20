@@ -29,9 +29,9 @@ export default async function handler(req: Request, res: NextApiResponse) {
         password
       );
 
-      res.status(200).json({ username });
+      return res.status(200).json({ username });
     } catch (error: any) {
-      res.status(400).json({ error: error?.message, body: req.body });
+      return res.status(400).json({ error: error?.message, body: req.body });
     }
   } else {
     return res.status(400).json({ success: false });
