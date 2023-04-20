@@ -10,6 +10,9 @@ export default function NavBar() {
     status: "loading" | "unauthenticated" | "authenticated";
   };
   const sesh = { ...session } as any;
+  const handleSignout = () => {
+    signOut();
+  };
   return (
     <div>
       <div className="container-full bg-white shadow-md px-7 relative z-100 ">
@@ -54,9 +57,7 @@ export default function NavBar() {
             <button
               type="button"
               title="sign out"
-              onClick={() => {
-                signOut();
-              }}
+              onClick={handleSignout}
               className="bg-customWhite w-10 aspect-square rounded-xl shadow-sm"
             >
               <i className="text-2xl fa-solid fa-arrow-right-from-bracket"></i>

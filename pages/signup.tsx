@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import PuffLoader from "react-spinners/PuffLoader";
 import { CSSProperties } from "react";
 import { getSession, signIn } from "next-auth/react";
-
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 const override: CSSProperties = {
   display: "block",
   marginTop: "10px",
@@ -13,6 +14,25 @@ const override: CSSProperties = {
 };
 
 export default function Signup({ sesh }: { sesh: any }) {
+  const MySwal = withReactContent(Swal);
+
+  const swalFireSuccess = () => {
+    MySwal.fire({
+      title: "Success!",
+      text: "Your account has been created!",
+      icon: "success",
+      confirmButtonText: "Cool",
+    });
+  };
+
+  const swalFireWarning = (message: string) => {
+    MySwal.fire({
+      title: "Warning!",
+      text: message,
+      icon: "warning",
+      confirmButtonText: "Ok",
+    });
+  };
   const [focusedUsername, setFocusedUsername] = useState(false);
   const [username, setUsername] = useState("");
   const [focusedPassword, setFocusedPassword] = useState(false);
@@ -25,7 +45,7 @@ export default function Signup({ sesh }: { sesh: any }) {
   const [lastName, setLastName] = useState("");
   const [focusedMiddleName, setFocusedMiddleName] = useState(false);
   const [middleName, setMiddleName] = useState("");
-  const [error, setError] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -49,28 +69,30 @@ export default function Signup({ sesh }: { sesh: any }) {
     e.preventDefault();
     setLoading(true);
     if (password !== confirmPassword && password.length < 8) {
-      setError("Passwords do not match and must be at least 8 characters long");
+      swalFireWarning(
+        "Passwords do not match and must be at least 8 characters long"
+      );
       setLoading(false);
       return;
     }
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      swalFireWarning("Passwords do not match");
       setLoading(false);
       return;
     }
 
     if (firstName.length < 1 || lastName.length < 1 || password.length < 0) {
-      setError("Please fill out all fields");
+      swalFireWarning("Please fill out all fields");
       setLoading(false);
       return;
     }
 
     if (password.length < 8) {
-      setError("Password must be at least 8 characters long");
+      swalFireWarning("Password must be at least 8 characters long");
       setLoading(false);
       return;
     }
-    setError("");
+
     const payload = {
       username,
       password,
@@ -88,7 +110,7 @@ export default function Signup({ sesh }: { sesh: any }) {
     });
     if (!response.ok) {
       const data = await response.json();
-      setError(data.error);
+      swalFireWarning(data.error);
       setLoading(false);
       return;
     }
@@ -106,18 +128,24 @@ export default function Signup({ sesh }: { sesh: any }) {
     });
     if (login?.status != 200) {
       if (login?.error) {
-        setError(login.error);
+        swalFireWarning(login?.error);
       } else {
-        setError("");
       }
     } else {
-      setError("");
-      window.location.reload();
+      MySwal.fire({
+        title: "Success!",
+        text: "You have successfully signed up!",
+        icon: "success",
+        showConfirmButton: false,
+      });
+      setTimeout(() => {
+        window.location.href = "/user/unverified";
+      }, 2000);
     }
   };
 
   return (
-    <>
+    <div className="relative">
       <Wave
         className="absolute bottom-0 -z-50  overflow-visible h-[30vh] "
         fill="#1994e6"
@@ -292,11 +320,7 @@ export default function Signup({ sesh }: { sesh: any }) {
                   >
                     Confirm Password
                   </label>
-                  {error && (
-                    <p className="text-red-500 text-sm" id="passwordErr">
-                      {error}
-                    </p>
-                  )}
+
                   {loading && (
                     //show success login
                     <PuffLoader
@@ -312,12 +336,12 @@ export default function Signup({ sesh }: { sesh: any }) {
                   className="bg-transparent border-2 border-tertiary hover:bg-tertiary hover:text-customBlack transition-colors text-customWhite font-Poppins font-semibold text-lg md:text-xl h-10 md:h-10 rounded-md"
                   type="submit"
                 >
-                  Log in
+                  Sign up
                 </button>
               </div>
             </form>
           </div>
-          <div className="w-full  md:w-1/2 bg-bgImage bg-no-repeat bg-cover  grid place-content-center rounded-t-2xl md:rounded-none p-5 md:p-0">
+          <div className="w-full  md:w-1/2 bg-bgImage bg-no-repeat bg-cover backdrop-brightness-50  grid place-content-center rounded-t-2xl md:rounded-none p-5 md:p-0">
             <img
               src="/barms-logo.png"
               alt=""
@@ -327,7 +351,7 @@ export default function Signup({ sesh }: { sesh: any }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

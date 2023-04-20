@@ -25,7 +25,7 @@ module.exports = {
       backgroundImage: {
         "hero-pattern": "url('/wave.svg')",
         bgTexture: "url('/denim.webp')",
-        bgImage: "url('/bg-image.jpg')",
+        bgImage: "url('/bg-image2.jpeg')",
       },
       keyframes: {
         wiggle: {

@@ -179,7 +179,7 @@ export default function Login() {
               </div>
             </form>
           </div>
-          <div className="w-full h-1/3 md:h-full md:w-1/2 bg-white grid place-content-center rounded-t-2xl md:rounded-none p-5 md:p-0">
+          <div className="w-full h-1/3 md:h-full md:w-1/2 bg-bgImage bg-cover bg-no-repeat grid place-content-center rounded-t-2xl md:rounded-none p-5 md:p-0">
             <img
               src="/barms-logo.png"
               alt=""

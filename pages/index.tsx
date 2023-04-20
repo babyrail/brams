@@ -36,8 +36,23 @@ export async function getServerSideProps(context: any) {
         permanent: false,
       },
     };
+  } else if (sesh?.role === "user") {
+    return {
+      redirect: {
+        destination: "/user",
+        permanent: false,
+      },
+    };
+  } else if (sesh?.role === "unverified") {
+    return {
+      redirect: {
+        destination: "/user/unverified",
+        permanent: false,
+      },
+    };
+  } else {
+    return {
+      props: { session },
+    };
   }
-  return {
-    props: { session },
-  };
 }
