@@ -100,8 +100,8 @@ export default function Signup({ sesh }: { sesh: any }) {
       lastName,
       middleName,
     };
-
-    const response = await fetch("/api/user/signup", {
+    console.log(JSON.stringify(payload));
+    const response = await fetch("api/user/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
