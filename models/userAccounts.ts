@@ -81,8 +81,7 @@ userSchema.statics.signup = async function (
   }
   await dbConnect();
   const exists = (await fetch(
-    `http://localhost:3000/api/records/?firstName=${firstName.toUpperCase()}&lastName=${lastName.toUpperCase()}&middleName=${middleName.toUpperCase()}` ||
-      `https://barms.vercel.app/api/records/?firstName=${firstName.toUpperCase()}&lastName=${lastName.toUpperCase()}&middleName=${middleName.toUpperCase()}`
+    `api/records/?firstName=${firstName.toUpperCase()}&lastName=${lastName.toUpperCase()}&middleName=${middleName.toUpperCase()}`
   )) as any;
 
   const response = await exists.json();
