@@ -88,7 +88,9 @@ userSchema.statics.signup = async function (
   }
   console.log(apiUrl);
   await dbConnect();
-  const exists = (await fetch(apiUrl)) as any;
+  const exists = (await fetch(apiUrl, {
+    method: "GET",
+  })) as Response;
 
   const response = await exists.json();
   if (response.records == null) {
