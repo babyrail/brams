@@ -83,7 +83,7 @@ userSchema.statics.signup = async function (
   if (process.env.NODE_ENV === "development") {
     apiUrl = `http://localhost:3000/api/records/?firstName=${firstName.toUpperCase()}&lastName=${lastName.toUpperCase()}&middleName=${middleName.toUpperCase()}`;
   } else {
-    apiUrl = `https://barms.vercel.app//api/records/?firstName=${firstName.toUpperCase()}&lastName=${lastName.toUpperCase()}&middleName=${middleName.toUpperCase()}`;
+    apiUrl = `https://barms.vercel.app/api/records/?firstName=${firstName.toUpperCase()}&lastName=${lastName.toUpperCase()}&middleName=${middleName.toUpperCase()}`;
   }
 
   await dbConnect();
