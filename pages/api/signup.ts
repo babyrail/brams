@@ -14,14 +14,13 @@ interface Request extends NextApiRequest {
 
 export default async function handler(req: Request, res: NextApiResponse) {
   const { method } = req;
-  const { username, password, privilege } = req.body;
+  const { username, password, privilege, image } = req.body;
 
   await dbConnect();
 
   if (method == "POST") {
     try {
-      const user = await Admin.signup(username, password, privilege);
-
+      const user = await Admin.signup(username, password, privilege, image);
       res.status(200).json({ username });
     } catch (error: any) {
       res.status(400).json({ error: error?.message, body: req.body });

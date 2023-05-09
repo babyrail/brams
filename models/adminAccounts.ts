@@ -12,7 +12,8 @@ export interface IAdminModel extends Model<IAdmin> {
   signup(
     username: string,
     password: string,
-    privilege: string
+    privilege: string,
+    image: string
   ): Awaitable<IAdmin | null>;
 }
 
@@ -26,6 +27,10 @@ const adminSchema = new Schema<IAdmin>({
     required: true,
   },
   privilege: {
+    type: String,
+    required: true,
+  },
+  image: {
     type: String,
     required: true,
   },
@@ -54,7 +59,8 @@ adminSchema.statics.login = async function (
 adminSchema.statics.signup = async function (
   username: string,
   password: string,
-  privilege: string
+  privilege: string,
+  image: string
 ): Promise<IAdmin | null> {
   if (!username || !password) {
     throw new Error("Please provide a username and password");
@@ -70,6 +76,7 @@ adminSchema.statics.signup = async function (
     username,
     password: hash,
     privilege,
+    image,
   });
 
   return user;

@@ -13,11 +13,12 @@ module.exports = {
     extend: {
       fontFamily: {
         Poppins: ["Poppins", "sans-serif"],
+        SegoeUI: ["Segoe UI", "sans-serif"],
       },
       colors: {
         customBlack: "#1D1D1F",
         customWhite: "#F5F5F7",
-        primary: "#1994e6",
+        primary: "#4A68C4",
         secondary: "#885DF1",
         tertiary: "#32DFAD",
         error: "#ff0000",

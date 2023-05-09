@@ -15,7 +15,7 @@ import client from "../../../lib/twilio";
 // const createToken = (_id, privilege) => {
 //   return jwt.sign({ _id, privilege }, process.env.SECRET, { expiresIn: "3d" });
 // };
-interface CustomUser extends AuthUser {
+export interface CustomUser extends AuthUser {
   role: string;
   token: string;
   verificationCode?: number;
@@ -23,7 +23,7 @@ interface CustomUser extends AuthUser {
   verified?: boolean;
 }
 
-interface CustomSession extends Session {
+export interface CustomSession extends Session {
   role: string;
   name: string;
   accessToken: string;
