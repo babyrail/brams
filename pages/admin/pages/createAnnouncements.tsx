@@ -17,6 +17,7 @@ export default function createAnnouncements() {
       if (res.ok) {
         const json = await res.json();
         setData(json.announcement);
+        
       } else {
         MySwal.fire({
           title: "Error!",

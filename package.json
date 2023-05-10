@@ -8,6 +8,7 @@
   "dependencies": {
     "bcrypt": "^5.1.0",
     "jsonwebtoken": "^9.0.0",
+    "moment": "^2.29.4",
     "mongoose": "github:sfvii/mongoose",
     "next": "latest",
     "next-auth": "^4.21.1",
