@@ -20,15 +20,19 @@ export default async function handler(req: Request, res: NextApiResponse) {
   await dbConnect();
 
   if (method == "POST") {
-    const user = await User.signup(
-      firstName,
-      middleName,
-      lastName,
-      username,
-      password
-    );
-
-    return res.status(200).json({ username });
+    
+    try{
+      const user = await User.signup(
+        firstName,
+        middleName,
+        lastName,
+        username,
+        password
+      );
+      return res.status(200).json({ username });
+    }catch(err: any){
+      return res.status(400).json({error: err.message});
+    }
   } else {
     return res.status(400).json({ success: false });
   }

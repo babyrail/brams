@@ -28,11 +28,6 @@ export default function manageUsers() {
   }, []);
   function handleOnChange(event: any) {
     const file = event?.target?.files[0] as File;
-    const imgPreview = document.getElementById(
-      "profile-pic-preview"
-    ) as HTMLImageElement;
-    console.log(imgPreview);
-    imgPreview.src = URL.createObjectURL(file);
     const reader = new FileReader();
     reader.onload = (event) => {
       const dataUrl = event?.target?.result as any;
@@ -328,7 +323,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getSession(context);
   if (!session) {
     return {
-      redirect: {
+      redirect: { 
         destination: "/admin/",
         permanent: false,
       },

@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { IAnnouncement } from "../../../models/announcementModel";
-
+import { GetServerSidePropsContext } from "next";
+import { getSession } from "next-auth/react";
 export default function createAnnouncements() {
   const [data, setData] = useState([] as IAnnouncement[]);
   const MySwal = withReactContent(Swal);
   const [editEnabled, setEditEnabled] = useState(false);
+  const [file, setFile] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch("/api/announcements/get_announcements", {
@@ -26,6 +28,15 @@ export default function createAnnouncements() {
     };
     fetchData();
   }, []);
+  function handleOnChange(event: any) {
+    const file = event?.target?.files[0] as File;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const dataUrl = event?.target?.result as any;
+      setFile(dataUrl);
+    };
+    reader.readAsDataURL(file);
+  }
   const deletePost = async (_id: string) => {
     const res = await fetch("/api/announcements/delete_announcements", {
       method: "POST",
@@ -53,13 +64,54 @@ export default function createAnnouncements() {
       });
     }
   };
-  const createAnnouncement = async (event: any) => {
+  const showModalCreateAnnouncement = (event: any) =>{
     event?.preventDefault();
 
-    const formModal = document.getElementById("formModal");
+    const formModal = document.getElementById("createAnnouncementForm");
     formModal?.classList.toggle("hidden");
     const body = document.querySelector("body");
     body?.classList.toggle("overflow-hidden");
+  }
+  const createAnnouncement = async (event: any) => {
+    event?.preventDefault();
+
+    const title = event?.target?.announcementFormTitle?.value;
+    const content = event?.target?.announcementFormContent?.value;
+    const formData = new FormData();
+    formData.append("file", file as any);
+    formData.append("upload_preset", "upload_resident");
+    const responseImage = await fetch(
+      "https://api.cloudinary.com/v1_1/dk3msiid1/image/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    const jsonImage = await responseImage.json();
+    const image = jsonImage.secure_url;
+    const newAnnouncement = await fetch("/api/announcements/create_announcements",{
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({title,content,image})
+    })
+    if(newAnnouncement.ok){
+      MySwal.fire({
+        title: "Success",
+        text: "Announcement has been posted",
+        icon: "success",
+        showConfirmButton: false,
+      });
+      window.location.reload();
+    }else{
+      MySwal.fire({
+        title: "Error",
+        text: "There has been an error saving your announcement. Please try again later",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
   };
   return (
     <div className="container mx-auto">
@@ -71,7 +123,7 @@ export default function createAnnouncements() {
           type="button"
           title="add-user"
           className="text-primary border-2 border-primary rounded-full px-5 py-2 font-SegoeUI font-bold hover:bg-primary hover:text-white transition duration-300 ease-in-out drop-shadow-sm"
-          onClick={createAnnouncement}
+          onClick={showModalCreateAnnouncement}
         >
           Create Announcement <i className="fas fa-plus"></i>
         </button>
@@ -87,6 +139,7 @@ export default function createAnnouncements() {
                   className="font-SegoeUI font-bold  text-2xl"
                 >
                   Title:&nbsp;
+                  
                 </label>
                 <input
                   type="text"
@@ -142,11 +195,96 @@ export default function createAnnouncements() {
         ))}
       </div>
       <div
-        className="absolute h-full w-full top-0 left-0 bg-black opacity-50 hidden"
-        id="formModal"
+        className="absolute bg-black bg-opacity-50 top-0 right-0 z-10 w-screen h-screen hidden "
+        id="createAnnouncementForm"
       >
-        <div className="w-1/2 bg-white  "></div>
+        <div className=" bg-black bg-opacity-50 w-full h-full ">
+          <form action="POST" onSubmit={createAnnouncement}>
+            <div className="bg-white w-full xl:w-1/2 mx-auto mt-20 p-5 ">
+              <div className="flex justify-between items-center border-b pb-5">
+                <h1 className="font-SegoeUI font-semibold text-2xl  drop-shadow ">
+                  Create New Announcement
+                </h1>
+                <button
+                  type="button"
+                  title="close"
+                  className="text-primary border-2 border-primary rounded-full px-5 py-2 font-SegoeUI font-bold hover:bg-primary hover:text-white transition duration-300 ease-in-out drop-shadow-sm"
+                  onClick={() => {
+                    const form = document.getElementById(
+                      "createAnnouncementForm"
+                    ) as HTMLDivElement;
+                    const body = document.querySelector("body");
+                    body?.classList.toggle("overflow-hidden")
+                    form?.classList.toggle("hidden");
+
+                  }}
+                >
+                  Close <i className="fas fa-times"></i>
+                </button>
+              </div>
+              
+              <div className="flex justify-between items-center mt-5 gap-5 flex-col xl:flex-row">
+                <div className="w-full">
+                  <label
+                    htmlFor="announcementFormTitle"
+                    className="font-SegoeUI font-semibold text-md  drop-shadow capitalize"
+                  >
+                    Title
+                  </label>
+                  <input
+                    type="text"
+                    name="announcementFormTitle"
+                    id="announcementFormTitle"
+                    className="w-full border-2  rounded-md px-5 py-2 font-SegoeUI font-bold   transition duration-300 ease-in-out drop-shadow-sm"
+                  />
+                </div>
+          
+              </div>
+              <div className="flex justify-between items-center mt-5 gap-5 flex-col xl:flex-row">
+                <div className="w-full">
+                  <label htmlFor="announcementFormContent" className="font-SegoeUI font-semibold text-md  drop-shadow capitalize">Body</label>
+                 <textarea className="w-full h-32 border-2  rounded-md px-5 py-2 font-SegoeUI font-bold   transition duration-300 ease-in-out drop-shadow-sm" id="announcementFormContent" name="announcementFormContent" title="announcementFormContent"></textarea>
+                </div>
+              </div>
+              {/* file input for image */}
+              <div className="flex justify-center items-center mt-5">
+                <div className="w-full flex flex-col">
+                  <label htmlFor="announcementFormImage"   className="font-SegoeUI font-semibold text-md  drop-shadow capitalize">Photos</label>
+                  <input type="file" 
+                      accept="image/*"
+                      name="announcementFormImage"
+                      id="announcementFormImage"
+                      onChange={handleOnChange}  />
+                </div>
+              </div>
+              <div className="flex justify-center items-center mt-5">
+                <button
+                  type="submit"
+                  title="submit"
+                  className="text-primary border-primary border-2 rounded-full px-5 py-2 font-SegoeUI font-bold hover:bg-primary hover:text-white transition duration-300 ease-in-out drop-shadow-sm"
+                >
+                  Submit <i className="fas fa-check"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext){
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/admin",
+        permanent: false,
+      },
+    };  
+  }
+
+  return { props: { ...session } };
 }
