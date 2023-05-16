@@ -4,7 +4,7 @@ import { getSession, useSession } from "next-auth/react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-export default function CreateRecord({ sesh }: any) {
+export default function CreateRecord({ sesh, setShowAddModal }: any) {
   const MySwal = withReactContent(Swal);
 
   const [file, setFile] = useState(null);
@@ -45,19 +45,19 @@ export default function CreateRecord({ sesh }: any) {
       formData2.append(
         "firstName",
         (
-          document.getElementById("firstName") as HTMLInputElement
+          document.getElementById("newFirstName") as HTMLInputElement
         ).value.toUpperCase()
       );
       formData2.append(
         "lastName",
         (
-          document.getElementById("lastName") as HTMLInputElement
+          document.getElementById("newLastName") as HTMLInputElement
         ).value.toUpperCase()
       );
       formData2.append(
         "middleName",
         (
-          document.getElementById("middleName") as HTMLInputElement
+          document.getElementById("newMiddleName") as HTMLInputElement
         ).value.toUpperCase()
       );
       formData2.append(
@@ -142,7 +142,7 @@ export default function CreateRecord({ sesh }: any) {
 
         let jsonData = JSON.stringify(formDataObject);
         console.log(jsonData);
-        const uploadToDB = await fetch("../../api/records", {
+        const uploadToDB = await fetch("/api/records", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -160,7 +160,7 @@ export default function CreateRecord({ sesh }: any) {
             confirmButtonText: "Ok",
           }).then((result) => {
             if (result.isConfirmed) {
-              window.location.href = "/admin/pages/createRecord";
+              window.location.reload();
             }
           });
         }
@@ -177,20 +177,31 @@ export default function CreateRecord({ sesh }: any) {
     upload();
   }
   return (
-    <>
-      <div className="container mx-auto p-10 ">
+    <div className="">
+      <div className="absolute w-full top-0 left-0  before:bg-black before:opacity-30 before:absolute before:top-0 before:left-0 before:w-screen before:h-full  ">
         <form
           method="post"
           onSubmit={handleOnSubmit}
-          className="flex flex-col bg-white rounded-lg px-8 shadow-md mt-14 pb-10"
+          className="flex flex-col bg-white rounded-lg px-8 shadow-md mt-14 pb-10 relative z-10 w-1/2 mx-auto"
         >
-          <h1 className="text-2xl font-Poppins font-semibold border-b border-b-gray-300 pt-10 pb-5 mb-5 ">
-            Create Record
-          </h1>
+          <div className="flex justify-between items-center border-b border-b-gray-300 pt-10 pb-5 mb-5">
+            <h1 className="text-2xl font-Poppins font-semibold   ">
+              Create Record
+            </h1>
+            <button
+              className="text-4xl"
+              onClick={() => {
+                setShowAddModal(false);
+              }}
+            >
+              &times;
+            </button>
+          </div>
+
           {/* Name */}
           <label
             className="text-lg font-Poppins font-normal"
-            htmlFor="firstName"
+            htmlFor="newFirstName"
           >
             First Name
           </label>
@@ -198,13 +209,13 @@ export default function CreateRecord({ sesh }: any) {
             placeholder="Ex. JUAN"
             className="bg-customWhite rounded-md border h-11 shadow-lg p-3"
             type="text"
-            name="firstName"
-            id="firstName"
+            name="newFirstName"
+            id="newFirstName"
           />
 
           <label
             className="text-lg font-Poppins font-normal"
-            htmlFor="lastName"
+            htmlFor="newLastName"
           >
             Last Name
           </label>
@@ -212,13 +223,13 @@ export default function CreateRecord({ sesh }: any) {
             placeholder="Ex. DELA CRUZ"
             className="bg-customWhite rounded-md border h-11 shadow-lg p-3"
             type="text"
-            name="lastName"
-            id="lastName"
+            name="newLastName"
+            id="newLastName"
           />
 
           <label
             className="text-lg font-Poppins font-normal"
-            htmlFor="middleName"
+            htmlFor="newMiddleName"
           >
             Middle Name
           </label>
@@ -226,8 +237,8 @@ export default function CreateRecord({ sesh }: any) {
             placeholder="Ex. SANTOS"
             className="bg-customWhite rounded-md border h-11 shadow-lg p-3"
             type="text"
-            name="middleName"
-            id="middleName"
+            name="newMiddleName"
+            id="newMiddleName"
           />
 
           <label className="text-lg font-Poppins font-normal" htmlFor="suffix">
@@ -444,7 +455,7 @@ export default function CreateRecord({ sesh }: any) {
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 

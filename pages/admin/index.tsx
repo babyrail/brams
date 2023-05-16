@@ -155,7 +155,7 @@ export async function getServerSideProps(context: any) {
     if (sesh.role === "superadmin") {
       return {
         redirect: {
-          destination: "/admin/home",
+          destination: "/admin/dashboard",
           permanent: false,
         },
       };
@@ -163,7 +163,7 @@ export async function getServerSideProps(context: any) {
     if (sesh.role === "admin") {
       return {
         redirect: {
-          destination: "/admin/home",
+          destination: "/admin/dashboard",
           permanent: false,
         },
       };
