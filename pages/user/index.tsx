@@ -1,10 +1,20 @@
 import React from "react";
 import { GetServerSidePropsContext } from "next";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
+import { CustomSession } from "../api/auth/[...nextauth]";
 import User from "../../models/userAccounts";
 import dbConnect from "../../lib/dbConnect";
 export default function Index() {
-  return <div>Welcome to user homepage</div>;
+  const { data: session } = useSession() as {
+    data: CustomSession | null;
+    status: "loading" | "unauthenticated" | "authenticated";
+  };
+  return <div>
+    <div className="container mx-auto">
+      <div className=" mt-5 "><h1 className="text-2xl font-SegoeUI font-bold">Welcome, {session?.name}</h1></div>
+    </div>
+    <div className=" mt-5"></div>
+  </div>;
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {

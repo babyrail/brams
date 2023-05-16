@@ -15,7 +15,7 @@ export default function Layout({ children }: PropsWithChildren<{}>) {
     <>
       {session?.role === "admin" || session?.role === "superadmin" ? (
         <AdminNavBar />
-      ) : null}
+      ) : <NavBar/>}
       {children}
     </>
   );

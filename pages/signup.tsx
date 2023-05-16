@@ -110,6 +110,7 @@ export default function Signup({ sesh }: { sesh: any }) {
     });
     if (!response.ok) {
       const data = await response.json();
+      console.log(data)
       swalFireWarning(data.error);
       setLoading(false);
       return;
@@ -162,7 +163,8 @@ export default function Signup({ sesh }: { sesh: any }) {
           className="w-[90%] md:w-1/2 h-fit  mx-auto rounded-2xl drop-shadow-2xl relative z-10 flex flex-col-reverse md:flex-row overflow-hidden scale-0   "
           id="login-form"
         >
-          <div className="bg-gradient-to-b from-[#00ADD8] to-[#338FCC] h-2/3 md:h-full md:py-20  w-full md:w-1/2 md:scale-100 ">
+          <div className="bg-gradient-to-b from-[#00ADD8] to-[#338FCC] h-2/3 md:h-full md:py-20  w-full md:w-1/2 md:scale-100 relative">
+            <a href="/login" className="absolute top-10 text-customWhite text-2xl left-10"><i className="fa-solid fa-arrow-left"></i></a>
             <form
               action="POST"
               className="flex flex-col justify-center  md:h-full px-10 py-10 md:py-0 relative z-10 gap-8 md:gap-10 "

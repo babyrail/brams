@@ -32,19 +32,19 @@ export interface CustomSession extends Session {
   expirationTime?: Date;
   verified?: boolean;
 }
-// async function sendVerification(code: number) {
-//   try {
-//     const message = await client.messages.create({
-//       body: `Your verification code is ${code}`, // Message body
-//       from: "+16204078099", // Your Twilio phone number
-//       to: "+639672586160", // Recipient's phone number
-//     });
-//     console.log(message.sid); // Log the message SID if successful
-//     console.log(message.status); // Log the message status if successful
-//   } catch (error) {
-//     console.error(error); // Log any errors
-//   }
-// }
+async function sendVerification(code: number) {
+  try {
+    const message = await client.messages.create({
+      body: `Your verification code is ${code}`, // Message body
+      from: "+12705947855", // Your Twilio phone number
+      to: "+639999546329", // Recipient's phone number
+    });
+    console.log(message.sid); // Log the message SID if successful
+    console.log(message.status); // Log the message status if successful
+  } catch (error) {
+    console.error(error); // Log any errors
+  }
+}
 
 const authOptions: NextAuthOptions = {
   session: {
@@ -145,7 +145,7 @@ const authOptions: NextAuthOptions = {
               ),
             };
           } else {
-            // sendVerification(verificationCode ? verificationCode : 0);
+            sendVerification(verificationCode ? verificationCode : 0);
             return {
               name: username,
               verificationCode,

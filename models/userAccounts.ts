@@ -88,11 +88,12 @@ userSchema.statics.signup = async function (
   }
   console.log(apiUrl);
   await dbConnect();
-  const exists = (await fetch(apiUrl, {
+  const exists = await fetch(apiUrl, {
     method: "GET",
-  })) as Response;
+  });
 
   const response = await exists.json();
+  console.log(response);
   if (response.records == null) {
     throw new Error("Not a resident");
   }
