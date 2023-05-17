@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-
+import { ClipLoader } from "react-spinners";
+import { getSession } from "next-auth/react";
+import { CustomSession } from "../api/auth/[...nextauth]";
 export default function dashboard() {
   const [userCount, setUserCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -18,6 +20,7 @@ export default function dashboard() {
     }
   };
   const fetchRequest = async () => {
+    setLoading(true);
     const res = await fetch("/api/requests/get_requests", {
       method: "GET",
     });
@@ -25,6 +28,7 @@ export default function dashboard() {
       const json = await res.json();
       setRequestCount(json.data.length);
       setRequests(json.data);
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -41,16 +45,37 @@ export default function dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
           <div className="bg-white shadow-md rounded-md p-5">
             <h3 className="font-SegoeUI font-bold text-xl">Total Users</h3>
-            <h1 className="font-SegoeUI font-bold text-4xl">{userCount}</h1>
+            <h1 className="font-SegoeUI font-bold text-4xl">{!loading ? userCount : <ClipLoader color="#000000" size={20} />}</h1>
           </div>
           <div className="bg-white shadow-md rounded-md p-5">
             <h3 className="font-SegoeUI font-bold text-xl">
               Documents Requested
             </h3>
-            <h1 className="font-SegoeUI font-bold text-4xl">{requestCount}</h1>
+            <h1 className="font-SegoeUI font-bold text-4xl">{!loading ? requestCount : <ClipLoader color="#000000" size={20} />}</h1>
           </div>
         </div>
       </div>
     </div>
   );
+}
+export async function getServerSideProps(context: any) {
+  const session = await getSession(context);
+  const sesh = { ...session } as CustomSession;
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/admin",
+        permanent: false,
+      },
+    };
+  }
+  if (sesh.role != "superadmin") {
+    return {
+      redirect: {
+        destination: "/404",
+        permanent: false,
+      },
+    };
+  }
+  return { props: { sesh } };
 }

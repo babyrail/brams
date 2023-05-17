@@ -54,6 +54,7 @@ export default function manageRecords({ sesh }: any) {
     e.preventDefault();
     setShowViewModal(true);
     setRecordID(e.target.getAttribute("data-id"));
+
   };
   const handleDelete = async (e: any) => {
     e.preventDefault();
@@ -121,7 +122,7 @@ export default function manageRecords({ sesh }: any) {
         Cell: ({ row, cell }: CellProps<any>) => (
           <div className=" flex gap-5 justify-center ">
             <button
-              className="py-2 px-5 font-SegoeUI font-bold text-white bg-primary hover:bg-highlight rounded-md shadow-md transition-all duration-100 ease-in"
+              className="py-2 px-2 font-SegoeUI text-sm font-bold text-white bg-primary hover:bg-highlight rounded-md shadow-md transition-all duration-100 ease-in"
               data-id={`${row?.original?.id}`}
               onClick={handleViewRecord}
             >
@@ -129,14 +130,14 @@ export default function manageRecords({ sesh }: any) {
               View Record
             </button>
             <button
-              className="py-2 px-5 font-SegoeUI font-bold text-white bg-primary hover:bg-highlight rounded-md shadow-md transition-all duration-100 ease-in"
+              className="py-2 px-5 font-SegoeUI text-sm font-bold text-white bg-primary hover:bg-highlight rounded-md shadow-md transition-all duration-100 ease-in"
               data-id={`${row?.original?.id}`}
             >
               <i className="fa-solid fa-pencil mr-3"></i>
               Edit
             </button>
             <button
-              className="py-2 px-5 font-SegoeUI font-bold text-error2 border-2 border-error2  rounded-md shadow-md hover:bg-error2 hover:text-white transition-all duration-100 ease-in"
+              className="py-2 px-5 font-SegoeUI text-sm font-bold text-error2 border-2 border-error2  rounded-md shadow-md hover:bg-error2 hover:text-white transition-all duration-100 ease-in"
               data-id={`${row?.original?.id}`}
               onClick={handleDelete}
             >
