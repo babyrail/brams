@@ -34,7 +34,7 @@ export default function ViewRecordModal({
 
   return (
     <div>
-      <div className="absolute top-0 left-0 w-full h-screen p-5 lg:p-0 flex justify-center items-center  before:absolute before:top-0 before:left-0 before:bg-black before:opacity-30 before:w-screen before:h-screen before:z-10">
+      <div className="absolute top-0 left-0 w-full h-full p-5 lg:p-0 flex justify-center items-center  before:absolute before:top-0 before:left-0 before:bg-black before:opacity-30 before:w-screen before:h-full before:z-10">
         <div className="rounded-lg bg-white z-50 relative w-full lg:w-1/2 mx-auto py-14 px-10  shadow-xl">
           <button
             className="absolute top-0 right-5 text-3xl"
