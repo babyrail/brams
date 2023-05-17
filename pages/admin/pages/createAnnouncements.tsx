@@ -4,21 +4,25 @@ import withReactContent from "sweetalert2-react-content";
 import { IAnnouncement } from "../../../models/announcementModel";
 import { GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
+import { BeatLoader } from "react-spinners";
 export default function createAnnouncements() {
   const [data, setData] = useState([] as IAnnouncement[]);
   const MySwal = withReactContent(Swal);
   const [editEnabled, setEditEnabled] = useState(false);
   const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const res = await fetch("/api/announcements/get_announcements", {
         method: "POST",
       });
       if (res.ok) {
         const json = await res.json();
         setData(json.announcement);
-        
+        setLoading(false);
       } else {
+        setLoading(false);
         MySwal.fire({
           title: "Error!",
           text: "Something went wrong",
@@ -118,8 +122,8 @@ export default function createAnnouncements() {
     }
   };
   return (
-    <div className="ml-56 pt-20">
-      <div className="container mx-auto">
+    <div className=" ml-48 2xl:ml-56 pt-20 py-5">
+      <div className="container mx-auto  ">
         <div className="border-b py-5 flex justify-between items-center">
           <h1 className="font-SegoeUI font-bold  text-primary text-2xl  drop-shadow-lg ">
             Announcements
@@ -134,7 +138,7 @@ export default function createAnnouncements() {
           </button>
         </div>
         <div className="w-full py-5">
-          {data.map((item, index) => (
+          {!loading ? data.map((item, index) => (
             <div key={index} className="w-full flex bg-white shadow-md mb-10 ">
               <div className="w-2/3 flex flex-col p-10 gap-10">
                 <input type="hidden" name="announcementId" value={item._id} />
@@ -196,13 +200,13 @@ export default function createAnnouncements() {
                 <img src={item.image} alt="" className="" />
               </div>
             </div>
-          ))}
+          )) : <div className="flex justify-center items-center mt-20"><BeatLoader color="#000000" size={15} /></div>}
         </div>
         <div
           className="absolute bg-black bg-opacity-50 top-0 right-0 z-10 w-screen h-screen hidden "
           id="createAnnouncementForm"
         >
-          <div className=" bg-black bg-opacity-50 w-full h-full ">
+          <div className="  w-full h-full ">
             <form action="POST" onSubmit={createAnnouncement}>
               <div className="bg-white w-full xl:w-1/2 mx-auto mt-20 p-5 ">
                 <div className="flex justify-between items-center border-b pb-5">

@@ -62,7 +62,7 @@ export default function Index() {
     fetchData();
   }, []);
   return (
-    <div>
+    <div className="ml-48 2xl:ml-56">
       <div className="container mx-auto">
         <div className=" mt-5 ">
           <h1 className="text-2xl font-SegoeUI font-bold">
