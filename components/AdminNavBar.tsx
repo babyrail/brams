@@ -46,7 +46,9 @@ export default function AdminNavBar() {
                   }
                 >
                   <i className="fa-solid fa-gauge text-2xl"></i>
-                  <h1 className="font-SegoeUI font-bold text-sm 2xl:text-md ">Dashboard</h1>
+                  <h1 className="font-SegoeUI font-bold text-sm 2xl:text-md ">
+                    Dashboard
+                  </h1>
                 </div>
               </Link>
               <Link
@@ -129,7 +131,9 @@ export default function AdminNavBar() {
               className="bg-customWhite   shadow-sm hover:bg-highlight hover:text-customWhite transition-all duration-300 flex justify-center items-center gap-2 w-1/2 h-8 2xl:h-12 rounded-md"
             >
               <i className="text-lg 2xl:text-2xl fa-solid fa-arrow-right-from-bracket"></i>
-              <span className="font-semibold 2xl:text-2xl text-sm">Sign Out</span>
+              <span className="font-semibold 2xl:text-md text-sm">
+                Sign Out
+              </span>
             </button>
           )}
         </div>

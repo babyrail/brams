@@ -138,7 +138,7 @@ export default function createAnnouncements() {
           </button>
         </div>
         <div className="w-full py-5">
-          {!loading ? data.map((item, index) => (
+          {!loading ? data.reverse().map((item, index) => (
             <div key={index} className="w-full flex bg-white shadow-md mb-10 ">
               <div className="w-2/3 flex flex-col p-10 gap-10">
                 <input type="hidden" name="announcementId" value={item._id} />
