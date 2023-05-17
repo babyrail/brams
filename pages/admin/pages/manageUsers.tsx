@@ -132,7 +132,7 @@ export default function manageUsers() {
   };
 
   return (
-    <div className="">
+    <div className="ml-56 pt-20">
       <div className="container mx-auto">
         <div className=" border-b p-5 flex justify-between items-center">
           <h1 className="font-SegoeUI font-semibold text-2xl text-primary drop-shadow">

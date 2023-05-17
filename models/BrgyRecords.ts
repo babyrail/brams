@@ -1,6 +1,26 @@
 import mongoose from "mongoose";
 
-
+export interface Record extends Document {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  middleName?: string;
+  suffix?: string;
+  birthDate: Date;
+  gender: string;
+  civilStatus: string;
+  occupation?: string;
+  email?: string;
+  contactNumber?: number;
+  addressLine1: string;
+  addressLine2?: string;
+  barangay: string;
+  city: string;
+  province: string;
+  isFamilyHead: boolean;
+  brgy_records?: any[];
+  image: string;
+}
 
 const RecordSchema = new mongoose.Schema({
   firstName: {

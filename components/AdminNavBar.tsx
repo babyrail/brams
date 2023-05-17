@@ -14,14 +14,14 @@ export default function AdminNavBar() {
     signOut();
   };
   console.log(router.pathname);
-  const active = " bg-customBlack text-customWhite";
-  const inactive = " bg-white text-customBlack";
+  const active = " bg-highlight text-customWhite";
+  const inactive = " bg-white text-customBlack  group-hover:bg-[#f2f2f2]";
   const defaultStyle =
-    "w-full h-full px-5 py-3 flex flex-col justify-center items-center rounded-xl font-SegoeUI text-center transition-all duration-300 group-hover:bg-customBlack group-hover:text-customWhite";
+    "w-full h-full px-5 py-3 flex gap-5 items-center  font-SegoeUI text-center transition-all duration-300 ";
   return (
     <div>
-      <div className="container-full bg-black shadow-md px-7 relative z-100 h-[20vh] mb-16">
-        <div className="flex flex-row justify-between items-center ">
+      <div className="h-screen fixed w-56 top-0 left-0 flex flex-col  bg-customBlack2 ">
+        <div className="flex flex-col justify-between items-center h-full py-5">
           <Link href="/admin/home">
             <div className="flex flex-row items-center py-2  ">
               <img src="/barms-logo.png" alt="barms-logo" className="w-20" />
@@ -31,26 +31,26 @@ export default function AdminNavBar() {
             </div>
           </Link>
           {sesh.role === "superadmin" ? (
-            <div className="hidden md:flex flex-row  w-2/3 justify-between py-2 absolute left-0 right-0 -bottom-10 mx-auto">
+            <div className="hidden md:flex flex-col ">
               <Link
-                className=" h-32 flex justify-center items-center   shadow-md  shadow-slate-600 hover:shadow-inherit rounded-xl group"
-                href="/admin/pages/manageUsers"
+                className=" flex justify-center items-center   shadow-md   hover:shadow-inherit h-32  group w-full"
+                href="/admin/dashboard"
               >
                 <div
                   className={
-                    router.pathname == "/admin/pages/manageUsers"
-                      ? defaultStyle + active
-                      : defaultStyle + inactive
+                    `${
+                      router.pathname == "/admin/dashboard"
+                        ? defaultStyle + active
+                        : defaultStyle + inactive
+                    }` + " flex"
                   }
                 >
-                  <i className="fa-solid text-2xl fa-user"></i>
-                  <h1 className="font-SegoeUI font-bold text-xl ">
-                    Manage Users
-                  </h1>
+                  <i className="fa-solid fa-gauge text-2xl"></i>
+                  <h1 className="font-SegoeUI font-bold text-md ">Dashboard</h1>
                 </div>
               </Link>
               <Link
-                className=" h-32 flex justify-center items-center   shadow-md  shadow-slate-600 hover:shadow-inherit rounded-xl group"
+                className=" flex justify-center items-center   shadow-md   hover:shadow-inherit h-32  group w-full"
                 href="/admin/pages/manageRecords"
               >
                 <div
@@ -61,30 +61,30 @@ export default function AdminNavBar() {
                   }
                 >
                   <i className="fa-solid text-2xl fa-file-pen"></i>
-                  <h1 className="font-SegoeUI font-bold text-xl ">
+                  <h1 className="font-SegoeUI font-bold text-md ">
                     Manage Records
                   </h1>
                 </div>
               </Link>
               <Link
-                className=" h-32 flex justify-center items-center   shadow-md  shadow-slate-600 hover:shadow-inherit rounded-xl group"
-                href="/admin/home"
+                className=" flex justify-center items-center   shadow-md   hover:shadow-inherit h-32  group w-full"
+                href="/admin/pages/manageUsers"
               >
                 <div
                   className={
-                    router.pathname == "/admin/home"
+                    router.pathname == "/admin/pages/manageUsers"
                       ? defaultStyle + active
                       : defaultStyle + inactive
                   }
                 >
-                  <i className="fa-solid text-2xl fa-magnifying-glass"></i>
-                  <h1 className="font-SegoeUI font-bold text-xl ">
-                    Access Records
+                  <i className="fa-solid text-2xl fa-user"></i>
+                  <h1 className="font-SegoeUI font-bold text-md ">
+                    Manage Admin Users
                   </h1>
                 </div>
               </Link>
               <Link
-                className=" h-32 flex justify-center items-center   shadow-md  shadow-slate-600 hover:shadow-inherit rounded-xl group"
+                className=" flex justify-center items-center   shadow-md   hover:shadow-inherit h-32  group w-full"
                 href="/admin/pages/ayudaManagement"
               >
                 <div
@@ -95,13 +95,13 @@ export default function AdminNavBar() {
                   }
                 >
                   <i className="fa-solid text-2xl fa-sack-xmark"></i>
-                  <h1 className="font-SegoeUI font-bold text-xl ">
+                  <h1 className="font-SegoeUI font-bold text-md ">
                     Ayuda Management
                   </h1>
                 </div>
               </Link>
               <Link
-                className=" h-32 flex justify-center items-center   shadow-md  shadow-slate-600 hover:shadow-inherit rounded-xl group"
+                className=" flex justify-center items-center   shadow-md   hover:shadow-inherit h-32  group w-full"
                 href="/admin/pages/createAnnouncements"
               >
                 <div
@@ -111,8 +111,8 @@ export default function AdminNavBar() {
                       : defaultStyle + inactive
                   }
                 >
-                  <i className="fa-solid text-2xl fa-sack-xmark"></i>
-                  <h1 className="font-SegoeUI font-bold text-xl ">
+                  <i className="fa-solid text-2xl fa-bullhorn"></i>
+                  <h1 className="font-SegoeUI font-bold text-md ">
                     Announcements
                   </h1>
                 </div>
@@ -126,9 +126,10 @@ export default function AdminNavBar() {
               type="button"
               title="sign out"
               onClick={handleSignout}
-              className="bg-customWhite w-10  rounded-xl shadow-sm hover:bg-customBlack hover:text-customWhite transition-all duration-300"
+              className="bg-customWhite   shadow-sm hover:bg-highlight hover:text-customWhite transition-all duration-300 flex justify-center items-center gap-2 w-1/2 h-12 rounded-md"
             >
               <i className="text-2xl fa-solid fa-arrow-right-from-bracket"></i>
+              <span className="font-semibold">Sign Out</span>
             </button>
           )}
         </div>

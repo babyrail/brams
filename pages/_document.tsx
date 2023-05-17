@@ -17,7 +17,7 @@ export default function Document() {
           referrerPolicy="no-referrer"
         />
       </Head>
-      <body className="bg-customWhite relative">
+      <body className="bg-customWhite relative overflow-x-hidden">
         <Main />
         <NextScript />
       </body>

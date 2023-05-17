@@ -18,10 +18,13 @@ module.exports = {
       colors: {
         customBlack: "#1D1D1F",
         customWhite: "#F5F5F7",
+        customBlack2: "#16161a",
+        highlight: "#7f5af0",
         primary: "#4A68C4",
         secondary: "#885DF1",
         tertiary: "#32DFAD",
         error: "#ff0000",
+        error2: "#ff3333",
       },
       backgroundImage: {
         "hero-pattern": "url('/wave.svg')",
