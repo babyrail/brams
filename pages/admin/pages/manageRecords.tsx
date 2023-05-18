@@ -142,7 +142,7 @@ export default function manageRecords({ sesh }: any) {
               onClick={handleDelete}
             >
               <i className="fa-solid fa-trash mr-3"></i>
-              Delete
+              Archive
             </button>
           </div>
         ),
