@@ -25,6 +25,8 @@ module.exports = {
         tertiary: "#32DFAD",
         error: "#ff0000",
         error2: "#ff3333",
+        navBar: "#c5cad4",
+        navBarHighlight: "#292B2D",
       },
       backgroundImage: {
         "hero-pattern": "url('/wave.svg')",
