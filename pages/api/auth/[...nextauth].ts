@@ -137,7 +137,12 @@ const authOptions: NextAuthOptions = {
               name: username,
               role: "user",
               token: jwt.sign(
-                { username, verified },
+               
+                {
+                  id: user_id,
+                  name: username,
+                  verified,
+                },
                 process.env.SECRET as Secret,
                 {
                   expiresIn: "3d",

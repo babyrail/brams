@@ -8,6 +8,7 @@ export default async function handler(
 ) {
   const { method } = req;
   const { id } = req.body;
+  console.log(id)
   await dbConnect();
   switch (method) {
     case "POST":
@@ -19,11 +20,11 @@ export default async function handler(
             .json({ success: false, data: "No record found" });
         res.status(200).json({ success: true, data: record });
       } catch (error) {
-        res.status(400).json({ error: error });
+        res.status(400).json({ success: false ,error: error });
       }
       break;
     default:
-      res.status(400).json({ success: "error asdfs" });
+      res.status(400).json({ success: false });
       break;
   }
 }

@@ -13,15 +13,15 @@ export default function NavBar() {
       <div className="flex flex-col w-full justify-center items-center ">
         <img src="/barms-logo.png" alt="" className="w-3/4" />
       </div>
-      <div className="flex flex-col  h-full gap-14 mt-10 ">
-        <div className="flex flex-col  px-5  gap-3">
+      <div className="flex flex-col  h-full gap-6 2xl:gap-14 mt-10 ">
+        <div className="flex flex-col  px-5  ">
           <Link
             href="/user/home"
             className="rounded-xl hover:bg-navBarHighlight transition-all duration-200 ease-in group "
           >
             <div className="flex flex-row items-center py-2 px-2 ">
-              <i className="fa-solid fa-house text-md 2xl:text-md text-navBar group-hover:text-customWhite transition-all duration-200 ease-in"></i>
-              <h1 className="font-Poppins font-bold text-md 2xl:text-md ml-5 text-navBar group-hover:text-customWhite transition-all duration-200 ease-in">
+              <i className="fa-solid fa-house text-xs 2xl:text-xs text-navBar group-hover:text-customWhite transition-all duration-200 ease-in"></i>
+              <h1 className="font-Poppins font-bold text-xs 2xl:text-xs ml-5 text-navBar group-hover:text-customWhite transition-all duration-200 ease-in">
                 Home
               </h1>
             </div>
@@ -31,15 +31,15 @@ export default function NavBar() {
             className="rounded-xl hover:bg-navBarHighlight transition-all duration-200 ease-in group "
           >
             <div className="flex flex-row items-center py-2 px-2 ">
-              <i className="fa-solid fa-calendar text-md 2xl:text-md text-navBar group-hover:text-customWhite transition-all duration-200 ease-in"></i>
-              <h1 className="font-Poppins font-bold text-md 2xl:text-md ml-5 text-navBar group-hover:text-customWhite transition-all duration-200 ease-in">
+              <i className="fa-solid fa-calendar text-xs 2xl:text-xs text-navBar group-hover:text-customWhite transition-all duration-200 ease-in"></i>
+              <h1 className="font-Poppins font-bold text-xs 2xl:text-xs ml-5 text-navBar group-hover:text-customWhite transition-all duration-200 ease-in">
                 Events
               </h1>
             </div>
           </Link>
         </div>
         <div className="flex flex-col  px-5">
-          <h1 className="font-Poppins font-bold text-md 2xl:text-md  text-white">
+          <h1 className="font-Poppins font-bold text-xs 2xl:text-xs  text-white">
             Processes
           </h1>
           <div className="flex flex-col gap-3 mt-3 ">
@@ -48,8 +48,8 @@ export default function NavBar() {
               className=" rounded-xl hover:bg-navBarHighlight group transition-all duration-200 ease-in "
             >
               <div className="flex flex-row items-center py-2 px-2 ">
-                <i className="fa-solid fa-file text-md 2xl:text-md text-navBar group-hover:text-customWhite transition-all duration-200 ease-in"></i>
-                <h1 className="font-Poppins font-bold text-md 2xl:text-md ml-5 text-navBar group-hover:text-customWhite transition-all duration-200 ease-in ">
+                <i className="fa-solid fa-file text-xs 2xl:text-xs text-navBar group-hover:text-customWhite transition-all duration-200 ease-in"></i>
+                <h1 className="font-Poppins font-bold text-xs 2xl:text-xs ml-5 text-navBar group-hover:text-customWhite transition-all duration-200 ease-in ">
                   Document Request
                 </h1>
               </div>
@@ -59,8 +59,8 @@ export default function NavBar() {
               className=" rounded-xl hover:bg-navBarHighlight group transition-all duration-200 ease-in "
             >
               <div className="flex flex-row items-center py-2 px-2 ">
-                <i className="fa-solid fa-file text-md 2xl:text-md text-navBar group-hover:text-customWhite transition-all duration-200 ease-in"></i>
-                <h1 className="font-Poppins font-bold text-md 2xl:text-md ml-5 text-navBar group-hover:text-customWhite transition-all duration-200 ease-in ">
+                <i className="fa-solid fa-file text-xs 2xl:text-xs text-navBar group-hover:text-customWhite transition-all duration-200 ease-in"></i>
+                <h1 className="font-Poppins font-bold text-xs 2xl:text-xs ml-5 text-navBar group-hover:text-customWhite transition-all duration-200 ease-in ">
                   Business Permit
                 </h1>
               </div>
@@ -68,7 +68,7 @@ export default function NavBar() {
           </div>
         </div>
         <div className="flex flex-col  px-5">
-          <h1 className="font-Poppins font-bold text-md 2xl:text-md  text-white">
+          <h1 className="font-Poppins font-bold text-xs 2xl:text-xs  text-white">
             Services
           </h1>
           <div className="flex flex-col gap-3 mt-3 ">
@@ -77,8 +77,8 @@ export default function NavBar() {
               className=" rounded-xl hover:bg-navBarHighlight group transition-all duration-200 ease-in "
             >
               <div className="flex flex-row items-center py-2 px-2 ">
-                <i className="fa-solid fa-file text-md 2xl:text-md text-navBar group-hover:text-customWhite transition-all duration-200 ease-in"></i>
-                <h1 className="font-Poppins font-bold text-md 2xl:text-md ml-5 text-navBar group-hover:text-customWhite transition-all duration-200 ease-in ">
+                <i className="fa-solid fa-file text-xs 2xl:text-xs text-navBar group-hover:text-customWhite transition-all duration-200 ease-in"></i>
+                <h1 className="font-Poppins font-bold text-xs 2xl:text-xs ml-5 text-navBar group-hover:text-customWhite transition-all duration-200 ease-in ">
                   Emergency Services
                 </h1>
               </div>
@@ -88,8 +88,8 @@ export default function NavBar() {
               className=" rounded-xl hover:bg-navBarHighlight group transition-all duration-200 ease-in "
             >
               <div className="flex flex-row items-center py-2 px-2 ">
-                <i className="fa-solid fa-file text-md 2xl:text-md text-navBar group-hover:text-customWhite transition-all duration-200 ease-in"></i>
-                <h1 className="font-Poppins font-bold text-md 2xl:text-md ml-5 text-navBar group-hover:text-customWhite transition-all duration-200 ease-in ">
+                <i className="fa-solid fa-file text-xs 2xl:text-xs text-navBar group-hover:text-customWhite transition-all duration-200 ease-in"></i>
+                <h1 className="font-Poppins font-bold text-xs 2xl:text-xs ml-5 text-navBar group-hover:text-customWhite transition-all duration-200 ease-in ">
                   Health Services
                 </h1>
               </div>
@@ -103,7 +103,7 @@ export default function NavBar() {
           >
             <div className="flex flex-row items-center py-2 px-2 ">
               <i className="text-lg fa-solid fa-arrow-right-from-bracket text-navBar"></i>
-              <h1 className="font-Poppins font-bold text-md 2xl:text-md  ml-3 text-navBar group-hover:text-customWhite transition-all duration-200 ease-in">
+              <h1 className="font-Poppins font-bold text-xs 2xl:text-xs  ml-3 text-navBar group-hover:text-customWhite transition-all duration-200 ease-in">
                 Logout
               </h1>
             </div>
