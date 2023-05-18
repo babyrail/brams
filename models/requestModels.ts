@@ -11,11 +11,23 @@ const requestSchema = new Schema({
     required: true,
   },
   request_type: {
-    type: String,
+    type: Array,
     required: true,
   },
   request_date: {
     type: Date,
+    required: true,
+  },
+  pickup_date: {
+    type: Date,
+    required: true,
+  },
+  status: {
+    type: String,
+    required: true,
+  },
+  purpose: {
+    type: String,
     required: true,
   },
 });
