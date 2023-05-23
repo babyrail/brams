@@ -6,6 +6,7 @@ import { useTable, CellProps } from "react-table";
 import { Record } from "../../../models/BrgyRecords";
 import CreateRecord from "./createRecord";
 import ViewRecordModal from "../components/viewRecordModal";
+
 export default function manageRecords({ sesh }: any) {
   const [records, setRecords] = useState([] as Record[]);
   const [loading, setLoading] = useState(true);
@@ -58,12 +59,14 @@ export default function manageRecords({ sesh }: any) {
   const handleDelete = async (e: any) => {
     e.preventDefault();
     const id = e.target.getAttribute("data-id");
-    const res = await fetch("/api/records/delete_record", {
+
+    console.log(id, sesh?.name);
+    const res = await fetch("/api/records/archive_record", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id }),
+      body: JSON.stringify({ id, adminName: sesh?.name }),
     });
     const data = await res.json();
     if (res.ok) {
@@ -301,13 +304,9 @@ export default function manageRecords({ sesh }: any) {
   );
 }
 
-interface CustomSession extends Session {
-  role: string;
-}
-
 export async function getServerSideProps(context: any) {
   const session = await getSession(context);
-  const sesh = { ...session } as CustomSession;
+  const sesh = { ...session } as any;
   if (!session) {
     return {
       redirect: {

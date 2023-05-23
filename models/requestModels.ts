@@ -2,15 +2,19 @@ import mongoose, { Document, Model, Schema, model } from "mongoose";
 import { ObjectId } from "mongodb";
 export interface IRequest extends Document {
   user_id: ObjectId;
+  user_name: string;
   request_type: string;
   request_date: Date;
+  pickup_date: Date;
+  status: string;
+  purpose: string;
 }
 const requestSchema = new Schema({
   user_id: {
     type: Schema.Types.ObjectId,
     required: true,
   },
-  user_name:{
+  user_name: {
     type: String,
     required: true,
   },

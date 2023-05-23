@@ -137,7 +137,6 @@ const authOptions: NextAuthOptions = {
               name: username,
               role: "user",
               token: jwt.sign(
-               
                 {
                   id: user_id,
                   name: username,
