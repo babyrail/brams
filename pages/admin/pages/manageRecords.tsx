@@ -54,7 +54,6 @@ export default function manageRecords({ sesh }: any) {
     e.preventDefault();
     setShowViewModal(true);
     setRecordID(e.target.getAttribute("data-id"));
-
   };
   const handleDelete = async (e: any) => {
     e.preventDefault();

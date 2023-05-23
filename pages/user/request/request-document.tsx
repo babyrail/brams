@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 export default function requestDocument() {
   const MySwal = withReactContent(Swal);
-  const swalFireSuccess = (message?:string) => {
+  const swalFireSuccess = (message?: string) => {
     MySwal.fire({
       title: "Success!",
       text: "Your account has been created!",
@@ -27,42 +27,35 @@ export default function requestDocument() {
   const { data: session } = useSession() as {
     data: CustomSession | null;
     status: "loading" | "unauthenticated" | "authenticated";
-  };  
-  const sesh = {...session};
+  };
+  const sesh = { ...session };
   const today = new Date();
   const [date, setDate] = useState(today);
-  const [firstName, setFirstName] = useState("")
-  const [middleName, setMiddleName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [purpose, setPurpose] = useState("")
- const handleSelection = (e: any) => {
+  const [firstName, setFirstName] = useState("");
+  const [middleName, setMiddleName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [purpose, setPurpose] = useState("");
+  const handleSelection = (e: any) => {
     const target = e.target.getAttribute("data-target");
     e.target.classList.toggle("bg-primary");
     e.target.classList.toggle("text-customWhite");
     const checkbox = document.querySelector(`#${target}`);
     checkbox?.toggleAttribute("checked");
   };
-  const handleOnSubmit = async (e: any)=>{
-    const userID = sesh?.id
+  const handleOnSubmit = async (e: any) => {
+    const userID = sesh?.id;
     e.preventDefault();
     const form = e.target;
     const checkboxes = form.querySelectorAll("input[type=checkbox]");
     let selected = [] as any;
-    checkboxes.forEach((checkbox: HTMLInputElement)=>{
-      
-        if(checkbox.checked){
-          selected.push(checkbox.getAttribute("name"));
-          console.log(checkbox.getAttribute("name"));
-        }
-        console.log(selected);
-        
-    })
-    const body = {
-       user_id: userID,
-       request_type: selected,
-       pickup_date: date,
-       purpose,
-    }
+    checkboxes.forEach((checkbox: HTMLInputElement) => {
+      if (checkbox.checked) {
+        selected.push(checkbox.getAttribute("name"));
+        console.log(checkbox.getAttribute("name"));
+      }
+      console.log(selected);
+    });
+
     const res = await fetch(`/api/records/get_record`, {
       method: "POST",
       headers: {
@@ -73,33 +66,41 @@ export default function requestDocument() {
       }),
     });
     const residentInfo = await res.json();
-    if(!residentInfo.success){
-     swalFireWarning("Something Went Wrong")
-    }
-    else{
-      console.log(residentInfo.data.firstName, residentInfo.data.middleName, residentInfo.data.lastName)
-      if((residentInfo.data.firstName == firstName && residentInfo.data.lastName == lastName) || residentInfo.data.middlName == middleName ){
-        const newRes = await fetch("/api/requests/create_request",{
+    if (!residentInfo.success) {
+      swalFireWarning("Something Went Wrong");
+    } else {
+      if (
+        (residentInfo.data.firstName == firstName &&
+          residentInfo.data.lastName == lastName) ||
+        residentInfo.data.middlName == middleName
+      ) {
+        let fullName = `${residentInfo.data.lastName}, ${residentInfo.data.firstName}, ${residentInfo.data.middleName}`;
+        const body = {
+          user_id: userID,
+          user_name: fullName,
+          request_type: selected,
+          pickup_date: date,
+          purpose,
+        };
+        const newRes = await fetch("/api/requests/create_request", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(body)
-        })
+          body: JSON.stringify(body),
+        });
 
-        if(newRes.ok){
+        if (newRes.ok) {
           swalFireSuccess();
-          window.location.reload(); 
-        }
-        else{
+          window.location.reload();
+        } else {
           swalFireWarning("There's an error saving your request");
         }
-      }
-      else{
-        swalFireWarning("We cannot confirm your request due to incorrect name")
+      } else {
+        swalFireWarning("We cannot confirm your request due to incorrect name");
       }
     }
-  }
+  };
   return (
     <div className="ml-48 2xl:ml-56 pt-20 py-5">
       <div className="container mx-auto">
@@ -107,7 +108,11 @@ export default function requestDocument() {
           Documents Request Form
         </h2>
         <div>
-          <form action="POST" className="w-3/4 mx-auto" onSubmit={handleOnSubmit}>
+          <form
+            action="POST"
+            className="w-3/4 mx-auto"
+            onSubmit={handleOnSubmit}
+          >
             <div className="bg-white shadow-md rounded-md p-5 mt-5 flex flex-col gap-5">
               <div>
                 <h1 className="font-SegoeUI font-bold text-sm 2xl:text-lg ">
@@ -165,7 +170,7 @@ export default function requestDocument() {
                   placeholder="Purpose"
                   className="border bg-gray-100 rounded-md p-2 w-full resize-none h-20"
                   value={purpose}
-                  onChange={(event: any) =>setPurpose(event.target.value)}
+                  onChange={(event: any) => setPurpose(event.target.value)}
                 />
               </div>
               <div>

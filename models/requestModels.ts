@@ -10,6 +10,10 @@ const requestSchema = new Schema({
     type: Schema.Types.ObjectId,
     required: true,
   },
+  user_name:{
+    type: String,
+    required: true,
+  },
   request_type: {
     type: Array,
     required: true,

@@ -7,9 +7,9 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { method } = req;
-  const { user_id, request_type, pickup_date, purpose } = req.body;
+  const { user_id, user_name, request_type, pickup_date, purpose } = req.body;
   const request_date = new Date();
-  const status = "pending"
+  const status = "pending";
   await dbConnect();
 
   switch (method) {
@@ -17,11 +17,12 @@ export default async function handler(
       try {
         const request = await Requests.create({
           user_id,
+          user_name,
           request_type,
           request_date,
           pickup_date,
           status,
-          purpose
+          purpose,
         });
         res.status(201).json({ success: true, data: request });
       } catch (error) {
