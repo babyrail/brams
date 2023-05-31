@@ -16,7 +16,7 @@ export default function NavBar() {
       <div className="flex flex-col  h-full gap-6 2xl:gap-14 mt-10 ">
         <div className="flex flex-col  px-5  ">
           <Link
-            href="/user/home"
+            href="/user/"
             className="rounded-xl hover:bg-navBarHighlight transition-all duration-200 ease-in group "
           >
             <div className="flex flex-row items-center py-2 px-2 ">

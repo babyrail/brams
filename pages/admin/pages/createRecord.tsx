@@ -3,11 +3,13 @@ import cloudinary from "next-cloudinary";
 import { getSession, useSession } from "next-auth/react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { set } from "mongoose";
 
 export default function CreateRecord({ sesh, setShowAddModal }: any) {
   const MySwal = withReactContent(Swal);
 
   const [file, setFile] = useState(null);
+  const [isFamilyHead, setIsFamilyHead] = useState(false);
   function handleOnChange(event: any) {
     const file = event?.target?.files[0] as File;
     const reader = new FileReader();
@@ -120,15 +122,22 @@ export default function CreateRecord({ sesh, setShowAddModal }: any) {
       );
       formData2.append(
         "isFamilyHead",
-        (document.getElementById("isFamilyHead") as HTMLInputElement).value ===
+        (document.getElementById("isFamilyHead") as HTMLInputElement).value ==
           "on"
-          ? "false"
-          : "true"
+          ? "true"
+          : "false"
       );
       formData2.append(
         "brgy_records",
-
         (document.getElementById("brgy_records") as HTMLInputElement).value
+      );
+      formData2.append(
+        "member_count",
+        (document.getElementById("member_count") as HTMLInputElement).value
+      );
+      formData2.append(
+        "familyMonthlyIncome",
+        (document.getElementById("family_income") as HTMLInputElement).value
       );
 
       if (response.ok) {
@@ -150,6 +159,7 @@ export default function CreateRecord({ sesh, setShowAddModal }: any) {
           },
           body: jsonData,
         });
+
         if (uploadToDB.ok) {
           const result = await uploadToDB.json();
           console.log(result);
@@ -407,7 +417,7 @@ export default function CreateRecord({ sesh, setShowAddModal }: any) {
             id="barangay"
           />
           {/* family information */}
-          <div className="flex gap-4 my-5">
+          <div className="flex gap-4 mt-5">
             <label
               className="font-Poppins text-lg font-normal"
               htmlFor="isFamilyHead"
@@ -419,7 +429,50 @@ export default function CreateRecord({ sesh, setShowAddModal }: any) {
               type="checkbox"
               name="isFamilyHead"
               id="isFamilyHead"
+              onClick={(e) => {
+                if (e.currentTarget.checked) {
+                  setIsFamilyHead(true);
+                } else {
+                  setIsFamilyHead(false);
+                }
+              }}
             />
+          </div>
+          {/* Family Details */}
+          <div
+            className={`grid grid-cols-2 gap-5 mb-5 transition-all duration-500 ease-in-out overflow-hidden ${
+              isFamilyHead ? " h-auto " : "h-0"
+            }`}
+          >
+            <div className="flex flex-col w-2/3">
+              <label
+                className="font-Poppins text-lg font-normal"
+                htmlFor="member_count"
+              >
+                Family Member Count
+              </label>
+
+              <input
+                className="bg-customWhite border h-10 p-3 rounded-md shadow-lg"
+                type="text"
+                name="member_count"
+                id="member_count"
+              />
+            </div>
+            <div className="flex flex-col w-2/3">
+              <label
+                className="font-Poppins text-lg font-normal"
+                htmlFor="family_income"
+              >
+                Family Income
+              </label>
+              <input
+                className="bg-customWhite border h-10 p-3 rounded-md shadow-lg"
+                type="text"
+                name="family_income"
+                id="family_income"
+              />
+            </div>
           </div>
           {/* Records */}
           <label

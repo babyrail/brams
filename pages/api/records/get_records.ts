@@ -21,6 +21,16 @@ export default async function handler(
         res.status(400).json({ error: error });
       }
       break;
+    case "POST":
+      try {
+        const records = await Records.find({ isFamilyHead: true }).sort({
+          lastName: 1,
+        });
+        res.status(200).json({ records });
+      } catch (error) {
+        res.status(400).json({ error: error });
+      }
+      break;
     default:
       res.status(400).json({ success: "error asdfs" });
       break;

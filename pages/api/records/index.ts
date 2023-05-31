@@ -2,6 +2,8 @@ import dbConnect from "../../../lib/dbConnect";
 import Records from "../../../models/BrgyRecords";
 import jwt, { Secret } from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
+import Household from "../../../models/householdModel";
+import Assistance from "../../../models/assistanceModel";
 
 export default async function handler(
   req: NextApiRequest,
@@ -47,16 +49,94 @@ export default async function handler(
       break;
     case "POST":
       if (privilege == "superadmin") {
-        try {
-          const record = await Records.create(
-            req.body
-          ); /* create a new model in the database */
-          res.status(201).json({ data: record });
-        } catch (error) {
-          res.status(400).json({ error: error });
+        const {
+          firstName,
+          lastName,
+          middleName,
+          suffix,
+          birthDate,
+          gender,
+          civilStatus,
+          occupation,
+          email,
+          contactNumber,
+          addressLine1,
+          addressLine2,
+          barangay,
+          city,
+          province,
+          isFamilyHead,
+          brgy_records,
+          image,
+          member_count,
+          familyMonthlyIncome,
+        } = req.body;
+        const createRecord = {
+          firstName,
+          lastName,
+          middleName,
+          suffix,
+          birthDate,
+          gender,
+          civilStatus,
+          occupation,
+          email,
+          contactNumber,
+          addressLine1,
+          addressLine2,
+          barangay,
+          city,
+          province,
+          isFamilyHead,
+          brgy_records,
+          image,
+        };
+
+        if (isFamilyHead) {
+          let eligible_for_aid = false;
+          if (familyMonthlyIncome < 20000) {
+            eligible_for_aid = true;
+          }
+
+          try {
+            const record = await Records.create(createRecord);
+            console.log(record?._id);
+            const family = await Household.create({
+              head_of_family: `${firstName} ${lastName}`,
+              head_of_family_id: record?._id,
+              address: `${addressLine1} ${addressLine2}`,
+              contactDetails: {
+                email: email,
+                contact_number: contactNumber,
+              },
+              member_count: member_count,
+              familyMonthlyIncome: familyMonthlyIncome,
+              eligible_for_aid: eligible_for_aid,
+            });
+            console.log("this was reached");
+            console.log(family);
+            const assistance = await Assistance.create({
+              household_id: family._id,
+              status: "Unclaimed",
+            });
+            res.status(201).json({
+              data: record,
+              familyData: family,
+              assistanceData: assistance,
+            });
+          } catch (error) {
+            res.status(400).json({ error: error });
+          }
+        } else {
+          try {
+            const record = await Records.create(createRecord);
+            res.status(201).json({ data: record });
+          } catch (error) {
+            res.status(400).json({ error: error });
+          }
         }
-        break;
       }
+      break;
     default:
       res.status(400).json({ success: "error asdfs" });
       break;

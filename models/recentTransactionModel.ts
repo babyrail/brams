@@ -1,6 +1,8 @@
 import mongoose, { Document, Model, Schema, model } from "mongoose";
 import { ObjectId } from "mongodb";
-export interface IRequest extends Document {
+export interface IRecentTrans extends Document {
+  release_date: Date;
+  clerk_name: string;
   user_id: ObjectId;
   user_name: string;
   user_age: Number;
@@ -13,7 +15,15 @@ export interface IRequest extends Document {
   refNum: string;
   price: Number;
 }
-const requestSchema = new Schema({
+const recentTransactionSchema = new Schema({
+  release_date: {
+    type: Date,
+    required: true,
+  },
+  clerk_name: {
+    type: String,
+    required: true,
+  },
   user_id: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -31,10 +41,6 @@ const requestSchema = new Schema({
     required: true,
   },
   request_date: {
-    type: Date,
-    required: true,
-  },
-  pickup_date: {
     type: Date,
     required: true,
   },
@@ -64,7 +70,8 @@ const requestSchema = new Schema({
   },
 });
 
-const Requests =
-  mongoose.models.Requests || model<IRequest>("Requests", requestSchema);
+const RecentTransaction =
+  mongoose.models.RecentTransaction ||
+  model<IRecentTrans>("RecentTransaction", recentTransactionSchema);
 
-export default Requests;
+export default RecentTransaction;

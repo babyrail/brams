@@ -33,6 +33,7 @@ module.exports = {
         primary: "#4A68C4",
         secondary: "#885DF1",
         tertiary: "#32DFAD",
+        approved: "#00ff00",
         error: "#ff0000",
         error2: "#ff3333",
         navBar: "#c5cad4",

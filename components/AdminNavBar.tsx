@@ -8,8 +8,9 @@ export default function AdminNavBar() {
     data: CustomSession | null;
     status: "loading" | "unauthenticated" | "authenticated";
   };
+
+  const sesh = { ...session } as CustomSession;
   const router = useRouter();
-  const sesh = { ...session } as any;
   const handleSignout = () => {
     signOut();
   };
