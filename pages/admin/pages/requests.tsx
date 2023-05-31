@@ -38,9 +38,7 @@ export default function requests() {
     setTableData(filteredData);
   };
   const fetchRequests = async () => {
-    const response = await fetch(
-      "http://localhost:3000/api/requests/get_requests"
-    );
+    const response = await fetch("/api/requests/get_requests");
     const requests = await response.json();
     setData(requests.data);
     setTableData(requests.data);
