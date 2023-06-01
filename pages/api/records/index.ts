@@ -117,6 +117,8 @@ export default async function handler(
             console.log(family);
             const assistance = await Assistance.create({
               household_id: family._id,
+              recipient_id: record._id,
+              recipient_name: `${lastName}, ${firstName} ${middleName}`,
               status: "Unclaimed",
             });
             res.status(201).json({

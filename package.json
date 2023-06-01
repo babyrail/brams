@@ -8,8 +8,10 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.0",
     "@pdfme/generator": "^1.1.10",
+    "@types/chart.js": "^2.9.37",
     "@types/datatables.net": "^1.10.24",
     "bcrypt": "^5.1.0",
+    "chart.js": "^4.3.0",
     "datatables.net-dt": "^1.13.4",
     "datatables.net-responsive-dt": "^2.4.1",
     "jquery": "^3.7.0",
@@ -20,6 +22,7 @@
     "next-auth": "^4.21.1",
     "next-cloudinary": "^4.3.0",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-data-table-component": "^7.5.3",
     "react-datepicker": "^4.11.0",
     "react-dom": "^18.2.0",

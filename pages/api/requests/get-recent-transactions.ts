@@ -1,6 +1,6 @@
 import dbConnect from "../../../lib/dbConnect";
 import { NextApiRequest, NextApiResponse } from "next";
-import Requests from "../../../models/requestModels";
+import RecentTransaction from "../../../models/recentTransactionModel";
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,28 +8,30 @@ export default async function handler(
 ) {
   const { method } = req;
   const { id } = req.body;
-  console.log(id || "no id");
   await dbConnect();
   switch (method) {
     case "GET":
       try {
-        const request = await Requests.find({}).sort({ request_date: -1 });
-        res.status(201).json({ success: true, data: request });
+        const recent = await RecentTransaction.find({})
+          .sort({
+            release_date: -1,
+          })
+          .limit(5);
+        res.status(201).json({ success: true, data: recent });
       } catch (error) {
         res.status(400).json({ error: error });
       }
       break;
     case "POST":
       try {
-        const request = await Requests.find({ user_id: id }).sort({
-          request_date: -1,
+        const recent = await RecentTransaction.find({ user_id: id }).sort({
+          release_date: -1,
         });
-        res.status(201).json({ success: true, data: request });
+        res.status(201).json({ success: true, data: recent });
       } catch (error) {
         res.status(400).json({ error: error });
       }
       break;
-
     default:
       res.status(400).json({ success: "error asdfs" });
       break;

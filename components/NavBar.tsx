@@ -37,6 +37,17 @@ export default function NavBar() {
               </h1>
             </div>
           </Link>
+          <Link
+            href="/user/profile"
+            className="rounded-xl hover:bg-navBarHighlight transition-all duration-200 ease-in group "
+          >
+            <div className="flex flex-row items-center py-2 px-2 ">
+              <i className="fa-solid fa-user text-xs 2xl:text-xs text-navBar group-hover:text-customWhite transition-all duration-200 ease-in"></i>
+              <h1 className="font-Poppins font-bold text-xs 2xl:text-xs ml-5 text-navBar group-hover:text-customWhite transition-all duration-200 ease-in">
+                Profile
+              </h1>
+            </div>
+          </Link>
         </div>
         <div className="flex flex-col  px-5">
           <h1 className="font-Poppins font-bold text-xs 2xl:text-xs  text-white">
@@ -55,13 +66,13 @@ export default function NavBar() {
               </div>
             </Link>
             <Link
-              href="/user/request/brgy-clearance"
+              href="/user/request/request-status"
               className=" rounded-xl hover:bg-navBarHighlight group transition-all duration-200 ease-in "
             >
               <div className="flex flex-row items-center py-2 px-2 ">
                 <i className="fa-solid fa-file text-xs 2xl:text-xs text-navBar group-hover:text-customWhite transition-all duration-200 ease-in"></i>
                 <h1 className="font-Poppins font-bold text-xs 2xl:text-xs ml-5 text-navBar group-hover:text-customWhite transition-all duration-200 ease-in ">
-                  Business Permit
+                  Request Status
                 </h1>
               </div>
             </Link>

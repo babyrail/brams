@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, { Document, model } from "mongoose";
 
-export interface Record extends Document {
+export interface IRecord extends Document {
   _id: string;
   firstName: string;
   lastName: string;
@@ -92,6 +92,6 @@ const RecordSchema = new mongoose.Schema({
 });
 
 const BrgyRecords =
-  mongoose.models.BrgyRecords || mongoose.model("BrgyRecords", RecordSchema);
-
+  mongoose.models.BrgyRecords ||
+  mongoose.model<IRecord>("BrgyRecords", RecordSchema);
 export default BrgyRecords;

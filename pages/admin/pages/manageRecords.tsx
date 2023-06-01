@@ -2,19 +2,19 @@ import React, { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { getSession, useSession } from "next-auth/react";
 import { Session } from "next-auth";
-import { Record } from "../../../models/BrgyRecords";
+import { IRecord } from "../../../models/BrgyRecords";
 import CreateRecord from "./createRecord";
 import ViewRecordModal from "../components/viewRecordModal";
 import DataTable, { TableColumn } from "react-data-table-component";
 export default function manageRecords({ sesh }: any) {
-  const [records, setRecords] = useState([] as Record[]);
+  const [records, setRecords] = useState([] as IRecord[]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
   const [recordID, setRecordID] = useState("");
-  const [tableData, setTableData] = useState<Record[]>([]);
+  const [tableData, setTableData] = useState<IRecord[]>([]);
   const fetchRecords = async () => {
     const res = await fetch("/api/records/get_records", {
       method: "GET",
