@@ -84,7 +84,7 @@ export default function NavBar() {
           </h1>
           <div className="flex flex-col gap-3 mt-3 ">
             <Link
-              href="/user/request/brgy-clearance"
+              href="/user/request/qwe"
               className=" rounded-xl hover:bg-navBarHighlight group transition-all duration-200 ease-in "
             >
               <div className="flex flex-row items-center py-2 px-2 ">
@@ -95,7 +95,7 @@ export default function NavBar() {
               </div>
             </Link>
             <Link
-              href="/user/request/brgy-clearance"
+              href="/user/request/asd"
               className=" rounded-xl hover:bg-navBarHighlight group transition-all duration-200 ease-in "
             >
               <div className="flex flex-row items-center py-2 px-2 ">
