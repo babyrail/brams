@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { IRequest } from "../../../brams/models/requestModels";
+import { IRequest } from "../../../models/requestModels";
+
 import { IRecentTrans } from "../../../models/recentTransactionModel";
 import { useSession, getSession } from "next-auth/react";
 import { CustomSession } from "../../../pages/api/auth/[...nextauth]";
