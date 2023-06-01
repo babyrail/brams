@@ -92,6 +92,7 @@ export default function dashboard() {
     fetchPopulation();
     fetchHousehold();
     fetchRecentTransactions();
+    setLoading(false);
   }, []);
   const columns: TableColumn<Row>[] = [
     {
