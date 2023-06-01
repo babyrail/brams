@@ -62,6 +62,9 @@ export default function dashboard() {
     if (res.ok) {
       const json = await res.json();
       setRecentTransactions(json.data);
+      setLoading(false);
+    } else {
+      setLoading(false);
     }
   };
   const fetchHousehold = async () => {
@@ -92,7 +95,6 @@ export default function dashboard() {
     fetchPopulation();
     fetchHousehold();
     fetchRecentTransactions();
-    setLoading(false);
   }, []);
   const columns: TableColumn<Row>[] = [
     {
