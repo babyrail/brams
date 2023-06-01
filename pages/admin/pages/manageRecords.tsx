@@ -194,6 +194,7 @@ export default function manageRecords({ sesh }: any) {
                 rangeSeparatorText: "of",
                 noRowsPerPage: true,
               }}
+              progressPending={loading}
               highlightOnHover
               pointerOnHover
               striped
