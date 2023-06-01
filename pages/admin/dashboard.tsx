@@ -31,9 +31,7 @@ export default function dashboard() {
     if (res.ok) {
       const json = await res.json();
       setUserCount(json.users.length);
-      setLoading(false);
     } else {
-      setLoading(false);
     }
   };
   ChartJS.register(ArcElement, Tooltip, Legend);
@@ -55,9 +53,6 @@ export default function dashboard() {
       });
       setTotalFemale(female);
       setTotalMale(male);
-      setLoading(false);
-    } else {
-      setLoading(false);
     }
   };
   const fetchRecentTransactions = async () => {
@@ -76,10 +71,8 @@ export default function dashboard() {
     if (res.ok) {
       const json = await res.json();
       setTotalHousehold(json.households.length);
-      setLoading(false);
     }
     if (!res.ok) {
-      setLoading(false);
     }
   };
   const fetchRequest = async () => {
@@ -91,7 +84,6 @@ export default function dashboard() {
       const json = await res.json();
       setRequestCount(json.data.length);
       setRequests(json.data);
-      setLoading(false);
     }
   };
   useEffect(() => {
